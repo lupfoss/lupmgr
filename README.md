@@ -14,11 +14,10 @@ Copy sample config file to a config file that you will modify:
 cp sample_config.sh config.sh
 ```
 
-Now, set up values in `config.sh` using instructions received from Lightup.
-You should only need to set the following field:
+Run the following command with the value as provided by Lightup:
 
 ```
-export LIGHTUP_CUSTOMER_TLA="<value>"
+echo 'export LIGHTUP_CUSTOMER_TLA=<value>' > user_config.sh
 ```
 
 

@@ -1,6 +1,7 @@
 #!/usr/bin/env bash
 
-source config.sh
+source user_config.sh
+source fixed_config.sh
 
 this_dir=$(pwd)
 

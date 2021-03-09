@@ -3,7 +3,8 @@
 sudo apt update
 sudo apt install autossh
 
-source config.sh
+source user_config.sh
+source fixed_config.sh
 
 mkdir -p keys
 
