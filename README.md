@@ -1,12 +1,12 @@
-# sshagent
+# lupagent
 
 ## Setup
 
 Clone this repository on the target VM:
 
 ```
-git clone https://github.com/lupfoss/sshagent.git
-cd sshagent
+git clone https://github.com/lupfoss/lupmgr.git
+cd lupmgr
 ```
 
 Copy sample config file to a config file that you will modify:
