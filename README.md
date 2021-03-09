@@ -36,7 +36,7 @@ After getting a go-ahead from Lightup to proceed to part two of setup, run the f
 
 ## Start
 
-Now start the ssh agent using:
+Start the agent using:
 
 ```
 ./connect.sh
@@ -44,7 +44,7 @@ Now start the ssh agent using:
 
 ## Stop
 
-At any point, stop the ssh agent using:
+Stop the agent using:
 
 ```
 ./disconnect.sh
