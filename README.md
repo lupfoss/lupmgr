@@ -51,3 +51,13 @@ Stop the agent using:
 ```
 
 Stopping the agent will take away access from Lightup.
+
+
+## Uninstall
+
+Clean out the setup:
+
+```
+./uninstall.sh
+```
+
