@@ -25,7 +25,7 @@ Communicate the public key listed and pasted at the end of `setup_part_one.sh`
 to Lightup:
 
 ```
-# send public key to Lightup
+# send public key to Lightup for activation
 ```
 
 After getting a go-ahead from Lightup to proceed to part two of setup, run the following:
