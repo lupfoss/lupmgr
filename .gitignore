@@ -1,3 +1,4 @@
 *.log
 user_config.sh
 keys/
+generated/
