@@ -29,7 +29,11 @@ From the repository folder, run the first part of the setup sequence:
 ```
 
 Communicate the public key listed and pasted at the end of `setup_part_one.sh`
-to Lightup.
+to Lightup:
+
+```
+# send public key to Lightup
+```
 
 After getting a go-ahead from Lightup to proceed to part two of setup, run the following:
 
