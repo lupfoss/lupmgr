@@ -12,4 +12,4 @@ autossh -f -M 0 ${LIGHTUP_CONNECT_USER_NAME}@${LIGHTUP_CONNECT_SERVER_NAME} -p $
 	-o ExitOnForwardFailure=yes \
 	-o UserKnownHostsFile=/dev/null \
 	-o StrictHostKeyChecking=no \
-	-R 9000:localhost:22 -vvv -i $this_dir/keys/${LIGHTUP_CONNECT_KEYPAIR_NAME}"
+	-R ${LIGHTUP_CONNECT_MAPPED_PORT}:localhost:22 -vvv -i $this_dir/keys/${LIGHTUP_CONNECT_KEYPAIR_NAME}"
