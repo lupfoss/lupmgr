@@ -9,17 +9,11 @@ git clone https://github.com/lupfoss/lupmgr.git
 cd lupmgr
 ```
 
-Copy sample config file to a config file that you will modify:
-```
-cp sample_config.sh config.sh
-```
-
 Run the following command with the value as provided by Lightup:
 
 ```
 echo 'export LIGHTUP_CUSTOMER_TLA=<value>' > user_config.sh
 ```
-
 
 
 From the repository folder, run the first part of the setup sequence:
