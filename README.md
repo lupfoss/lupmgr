@@ -1,4 +1,4 @@
-# lupagent
+# lupmgr
 
 ## Setup
 
