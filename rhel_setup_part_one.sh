@@ -1,7 +1,9 @@
 #!/usr/bin/env bash
 
-sudo apt update
-sudo apt install autossh
+# install autossh
+sudo dnf install https://dl.fedoraproject.org/pub/epel/epel-release-latest-8.noarch.rpm -y
+sudo dnf upgrade -y
+sudo yum install autossh -y
 
 source user_config.sh
 source fixed_config.sh
