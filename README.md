@@ -5,6 +5,11 @@
 Clone this repository on the target VM:
 
 ```
+# May need to install git first
+# e.g. in RHEL
+# > sudo yum check-update
+# > sudo yum install git -y
+
 git clone https://github.com/lupfoss/lupmgr.git
 cd lupmgr
 ```
