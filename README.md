@@ -11,6 +11,7 @@ Clone this repository on the target VM:
 # > sudo yum install git -y
 
 git clone https://github.com/lupfoss/lupmgr.git
+
 cd lupmgr
 ```
 
@@ -20,14 +21,19 @@ Run the following command with the value as provided by Lightup:
 echo 'export LIGHTUP_CUSTOMER_TLA=<value>' > user_config.sh
 ```
 
-
-From the repository folder, run the first part of the setup sequence:
+From the repository folder, run the first part of the setup sequence based on the OS you are using:
 ```
+RHEL7
+./rhel7_setup_part_one.sh
+
+RHEL8
+./rhel8_setup_part_one.sh
+
+Ubuntu 20.04
 ./setup_part_one.sh
 ```
 
-Communicate the public key listed and pasted at the end of `setup_part_one.sh`
-to Lightup:
+Communicate the public key listed and pasted at the end of the setup_part_one run to Lightup:
 
 ```
 # send public key to Lightup for activation
