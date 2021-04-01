@@ -116,6 +116,9 @@ detect_lsb_dist() {
         echo >&2 "$(echo | sed "i$_error_msg")"
         echo >&2 "Contact Lightup support support@lightup.ai"
         exit 1
+    else
+        echo $LB_DIST
+        echo $DIST_VERSION
     fi
 }
 
@@ -145,6 +148,7 @@ discover_public_ip() {
     if [ "$_status" -eq "0" ] && [ -n "$_out" ]; then
         if is_valid_ipv4 "$_out" || is_valid_ipv6 "$_out"; then
             PUBLIC_ADDRESS=$_out
+            echo $PUBLIC_ADDRESS
         fi
         return
     fi
@@ -157,6 +161,7 @@ discover_public_ip() {
     if [ "$_status" -eq "0" ] && [ -n "$_out" ]; then
         if is_valid_ipv4 "$_out" || is_valid_ipv6 "$_out"; then
             PUBLIC_ADDRESS=$_out
+            echo $PUBLIC_ADDRESS
         fi
         return
     fi
@@ -169,7 +174,17 @@ discover_public_ip() {
     if [ "$_status" -eq "0" ] && [ -n "$_out" ]; then
         if is_valid_ipv4 "$_out" || is_valid_ipv6 "$_out"; then
             PUBLIC_ADDRESS=$_out
+            echo $PUBLIC_ADDRESS
         fi
         return
     fi
 }
+
+main() {
+    discover_public_ip
+
+    detect_lsb_dist
+
+}
+
+main "$@"
