@@ -5,10 +5,12 @@
 Run the following command with values provided to you for your account:
 
 ```
-LIGHTUP_TLA=<value> LIGHTUP_KEY=<file> curl -L ... 
+LU_TLA=<tla> LU_TOKEN=<token> bash -c $(curl -L https://raw.githubusercontent.com/lupfoss/lupmgr/onecmd/bootstrap.sh)
 ```
 
-## Start
+## Troubleshooting and Overrides
+
+### Start
 
 Start the Lightup manager using:
 
@@ -16,7 +18,7 @@ Start the Lightup manager using:
 ./connect.sh
 ```
 
-## Stop
+### Stop
 
 Stop the Lightup manager using:
 
@@ -27,7 +29,7 @@ Stop the Lightup manager using:
 Stopping the Lightup manager will take away access from Lightup.
 
 
-## Uninstall
+### Uninstall
 
 Clean out the setup:
 
