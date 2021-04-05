@@ -101,6 +101,7 @@ fi
 
 #----
 
+./disconnect.sh
 ./connect.sh
 
 
