@@ -30,7 +30,7 @@ if [[ $DISTRO = "Ubuntu" ]]; then
 
     # this one covers the case of a ubuntu docker container
     if ! command -v sudo; then
-      apt update && apt install sudo openssh-server
+      apt update && apt install -y sudo openssh-server
       service ssh start
     fi
 
