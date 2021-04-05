@@ -45,14 +45,51 @@ fi
 
 
 BRANCH=onecmd
-git clone https://github.com/lupfoss/lupmgr.git
+[[ -d lupmgr ]] || git clone https://github.com/lupfoss/lupmgr.git
 cd lupmgr
 git checkout ${BRANCH}
 
 echo 'export LIGHTUP_CUSTOMER_TLA=${TLA}' > user_config.sh
 
-source setup_part_one.sh
-source setup_part_two.sh
+source user_config.sh
+source fixed_config.sh
+
+
+#----
+
+mkdir -p keys
+
+echo "generating new keypair to login to Lightup, name=${LIGHTUP_CONNECT_KEYPAIR_NAME}"
+if [[ ! -f ./keys/${LIGHTUP_CONNECT_KEYPAIR_NAME} ]]; then
+  ssh-keygen -t rsa -b 4096 -N "" -f ./keys/${LIGHTUP_CONNECT_KEYPAIR_NAME}
+else
+  echo "keypair already exists, skipping..."
+fi
+
+#echo; echo "please share the following public key with Lightup (./keys/${LIGHTUP_CONNECT_KEYPAIR_NAME}.pub):"; echo
+#cat ./keys/${LIGHTUP_CONNECT_KEYPAIR_NAME}.pub
+sshpass -p ${TOK} ssh-copy-id -i ./keys/${LIGHTUP_CONNECT_KEYPAIR_NAME}.pub ${LIGHTUP_CONNECT_USER_NAME}@${LIGHTUP_CONNECT_SERVER_NAME}
+
+#----
+
+
+# key setup
+echo "adding Lightup's public key to authorized keys..."
+scp -o "StrictHostKeyChecking no" -i ./keys/${LIGHTUP_CONNECT_KEYPAIR_NAME} -P ${LIGHTUP_CONNECT_SERVER_PORT} ${LIGHTUP_CONNECT_USER_NAME}@${LIGHTUP_CONNECT_SERVER_NAME}:~/"${LIGHTUP_ACCEPT_KEYPAIR_NAME}.pub" ./keys/
+mkdir -p ~/.ssh && cat "./keys/${LIGHTUP_ACCEPT_KEYPAIR_NAME}.pub" >> ~/.ssh/authorized_keys
+
+# rc.local setup
+mkdir -p generated/
+sudo cp rc-local.service /etc/systemd/system/rc-local.service
+echo "#!/usr/bin/env bash" > generated/rc.local.tmp
+./generate_command.sh >> generated/rc.local.tmp
+sudo cp generated/rc.local.tmp /etc/rc.local
+sudo chmod +x /etc/rc.local
+sudo systemctl enable rc-local
+sudo systemctl start rc-local.service
+sudo systemctl status rc-local.service
+
+#----
 
 ./connect.sh
 
