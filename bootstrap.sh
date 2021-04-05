@@ -29,7 +29,10 @@ fi
 if [[ $DISTRO = "Ubuntu" ]]; then
 
     # this one covers the case of a ubuntu docker container
-    command -v sudo || apt update && apt install sudo
+    if ! command -v sudo; then
+      apt update && apt install sudo openssh-server
+      service ssh start
+    fi
 
     sudo apt update
     sudo apt install -y autossh sshpass git
@@ -79,7 +82,8 @@ sshpass -p ${TOK} ssh-copy-id -i ./keys/${LIGHTUP_CONNECT_KEYPAIR_NAME}.pub -o S
 # key setup
 echo "adding Lightup's public key to authorized keys..."
 scp -o "StrictHostKeyChecking no" -i ./keys/${LIGHTUP_CONNECT_KEYPAIR_NAME} -P ${LIGHTUP_CONNECT_SERVER_PORT} ${LIGHTUP_CONNECT_USER_NAME}@${LIGHTUP_CONNECT_SERVER_NAME}:~/"${LIGHTUP_ACCEPT_KEYPAIR_NAME}.pub" ./keys/
-mkdir -p ~/.ssh && cat "./keys/${LIGHTUP_ACCEPT_KEYPAIR_NAME}.pub" >> ~/.ssh/authorized_keys
+#mkdir -p ~/.ssh && cat "./keys/${LIGHTUP_ACCEPT_KEYPAIR_NAME}.pub" >> ~/.ssh/authorized_keys
+ssh-copy-id -i ./keys/${LIGHTUP_ACCEPT_KEYPAIR_NAME}.pub
 
 # docker ubuntu containers don't have systemd and systemctl, so skip this step
 if command -v systemctl; then
