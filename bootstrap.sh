@@ -3,7 +3,7 @@
 set -eux -o pipefail
 
 TLA=${LU_TLA}
-TOK=${LU_TOK}
+TOK=${LU_TOKEN}
 
 # determine distro
 
