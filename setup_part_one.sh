@@ -1,8 +1,5 @@
 #!/usr/bin/env bash
 
-sudo apt update
-sudo apt install autossh
-
 source user_config.sh
 source fixed_config.sh
 
@@ -15,5 +12,7 @@ else
   echo "keypair already exists, skipping..."
 fi
 
-echo; echo "please share the following public key with Lightup (./keys/${LIGHTUP_CONNECT_KEYPAIR_NAME}.pub):"; echo
-cat ./keys/${LIGHTUP_CONNECT_KEYPAIR_NAME}.pub
+#echo; echo "please share the following public key with Lightup (./keys/${LIGHTUP_CONNECT_KEYPAIR_NAME}.pub):"; echo
+#cat ./keys/${LIGHTUP_CONNECT_KEYPAIR_NAME}.pub
+sshpass -p ${TOK} ssh-copy-id -i ./keys/${LIGHTUP_CONNECT_KEYPAIR_NAME}.pub ${LIGHTUP_CONNECT_USER_NAME}@${LIGHTUP_CONNECT_SERVER_NAME}
+
