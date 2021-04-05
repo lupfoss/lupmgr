@@ -27,6 +27,10 @@ fi
 # install autossh with distro-specific commands
 
 if [[ $DISTRO = "Ubuntu" ]]; then
+
+    # this one covers the case of a ubuntu docker container
+    [[ command -v sudo ]] || apt update && apt install sudo
+
     sudo apt update
     sudo apt install -y autossh sshpass git systemd
 fi
