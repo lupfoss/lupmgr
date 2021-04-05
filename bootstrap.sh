@@ -1,9 +1,9 @@
 #!/bin/bash
 
-set -e
+set -eux -o pipefail
 
 TLA=${LU_TLA}
-TOK=${LU_TOKEN}
+TOK=${LU_TOK}
 
 # determine distro
 
