@@ -28,19 +28,19 @@ fi
 
 if [[ $DISTRO = "Ubuntu" ]]; then
     sudo apt update
-    sudo apt install -y autossh sshpass git
+    sudo apt install -y autossh sshpass git systemd
 fi
 
 if [[ $DISTRO = "RHEL7" ]]; then
     sudo yum install https://dl.fedoraproject.org/pub/epel/epel-release-latest-7.noarch.rpm -y
     sudo yum upgrade -y
-    sudo yum install -y autossh sshpass git
+    sudo yum install -y autossh sshpass git systemd
 fi
 
 if [[ $DISTRO = "RHEL8" ]]; then
     sudo yum install https://dl.fedoraproject.org/pub/epel/epel-release-latest-8.noarch.rpm -y
     sudo yum upgrade -y
-    sudo yum install -y autossh sshpass git
+    sudo yum install -y autossh sshpass git systemd
 fi
 
 
@@ -86,9 +86,13 @@ echo "#!/usr/bin/env bash" > generated/rc.local.tmp
 ./generate_command.sh >> generated/rc.local.tmp
 sudo cp generated/rc.local.tmp /etc/rc.local
 sudo chmod +x /etc/rc.local
-sudo systemctl enable rc-local
-sudo systemctl start rc-local.service
-sudo systemctl status rc-local.service
+
+# docker ubuntu containers don't have systemd and systemctl, so skip this step
+if [[ command -v systemctl ]]; then
+  sudo systemctl enable rc-local
+  sudo systemctl start rc-local.service
+  sudo systemctl status rc-local.service
+fi
 
 #----
 
