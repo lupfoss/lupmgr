@@ -94,9 +94,10 @@ if command -v systemctl; then
   sudo cp generated/rc.local.tmp /etc/rc.local
   sudo chmod +x /etc/rc.local
 
-  sudo systemctl enable rc-local
-  sudo systemctl start rc-local.service
-  sudo systemctl status rc-local.service
+  # don't stop if those commands fail because systemctl on docker will fail
+  sudo systemctl enable rc-local || true
+  sudo systemctl start rc-local.service || true
+  sudo systemctl status rc-local.service || true
 fi
 
 #----
