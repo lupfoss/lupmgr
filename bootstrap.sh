@@ -49,15 +49,13 @@ fi
 
 
 BRANCH=onecmd
-[[ -d lupmgr ]] || git clone https://github.com/lupfoss/lupmgr.git
-cd lupmgr
-git checkout ${BRANCH}
+[[ ! -d lupmgr ]] || rm -rf lupmgr
+git clone https://github.com/lupfoss/lupmgr.git
+cd lupmgr && git checkout ${BRANCH}
 
 echo "export LIGHTUP_CUSTOMER_TLA=${TLA}" > user_config.sh
-
 source user_config.sh
 source fixed_config.sh
-
 
 #----
 
