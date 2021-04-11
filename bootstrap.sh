@@ -97,7 +97,7 @@ if command -v systemctl; then
   # don't stop if those commands fail because systemctl on docker will fail
   sudo systemctl enable rc-local || true
   sudo systemctl start rc-local.service || true
-  sudo systemctl status rc-local.service || true
+  #sudo systemctl status rc-local.service || true
 fi
 
 #----
