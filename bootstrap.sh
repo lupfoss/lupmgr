@@ -102,7 +102,7 @@ fi
 
 #----
 
-./disconnect.sh
-./connect.sh
+source disconnect.sh
+source connect.sh
 
 
