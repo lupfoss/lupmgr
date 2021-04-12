@@ -5,7 +5,7 @@
 Run the following command with values provided to you for your account:
 
 ```
-LU_TLA=<tla> LU_TOKEN=<token> bash -c $(curl -L https://raw.githubusercontent.com/lupfoss/lupmgr/onecmd/bootstrap.sh)
+LIGHTUP_TLA=<tla> LIGHTUP_TOKEN=<token> bash -c $(curl -L https://raw.githubusercontent.com/lupfoss/lupmgr/onecmd/bootstrap.sh)
 ```
 
 ## Troubleshooting and Overrides
