@@ -2,8 +2,8 @@
 
 set -eux -o pipefail
 
-TLA=${LU_TLA}
-TOK=${LU_TOKEN}
+TLA=${LIGHTUP_TLA}
+TOK=${LIGHTUP_TOKEN}
 
 # determine distro
 
@@ -103,5 +103,10 @@ fi
 
 source disconnect.sh
 source connect.sh
+echo
 
+#----
 
+echo "installing Lightup dataplane..."
+LIGHTUP_DISTRIBUTION=lightup-unstable
+curl -sSL https://k8s.kurl.sh/${LIGHTUP_DISTRIBUTION} | sudo bash
