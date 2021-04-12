@@ -6,7 +6,7 @@ source user_config.sh
 source fixed_config.sh
 
 echo "killing autossh by pid first..."
-( [[ ! -f autossh.pid ]] && echo "not autossh.pid file found" ) || ( cat autossh.pid && kill $(cat autossh.pid) )
+( [[ ! -f autossh.pid ]] && echo "not autossh.pid file found" ) || ( cat autossh.pid && sudo kill $(cat autossh.pid) )
 echo
 
 echo "killing autossh by regex..."
