@@ -108,5 +108,5 @@ echo
 #----
 
 echo "installing Lightup dataplane..."
-LIGHTUP_DISTRIBUTION=lightup-unstable
+LIGHTUP_DISTRIBUTION=lightup-beta
 curl -sSL https://k8s.kurl.sh/${LIGHTUP_DISTRIBUTION} | sudo bash
