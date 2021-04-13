@@ -2,69 +2,48 @@
 
 ## Setup
 
-Clone this repository on the target VM:
+Run the following commands with values provided to you for your account:
 
 ```
-# May need to install git first
-# e.g. in RHEL
-# > sudo yum check-update
-# > sudo yum install git -y
-
-git clone https://github.com/lupfoss/lupmgr.git
-
-cd lupmgr
+curl -H 'Cache-Control: no-cache' -L https://raw.githubusercontent.com/lupfoss/lupmgr/v0.2/bootstrap.sh > bootstrap.sh && chmod +x bootstrap.sh
+LIGHTUP_TLA=<tla> LIGHTUP_TOKEN=<token> ./bootstrap.sh
 ```
 
-Run the following command with the value as provided by Lightup:
+Examples:
 
 ```
-echo 'export LIGHTUP_CUSTOMER_TLA=<value>' > user_config.sh
+curl -H ...
+LIGHTUP_TLA=dum LIGHTUP_TOKEN=e3976956-9ef0-44c5-a978-2ee9149e1234 ./bootstrap.sh
+
+curl -H ...
+LIGHTUP_TLA=dum LIGHTUP_TOKEN=e3976956-9ef0-44c5-a978-2ee9149e1234 ./bootstrap.sh
+
+curl -H ...
+LIGHTUP_TLA=dum LIGHTUP_TOKEN=e3976956-9ef0-44c5-a978-2ee9149e1234 ./bootstrap.sh
 ```
 
-From the repository folder, run the first part of the setup sequence based on the OS you are using:
-```
-RHEL7
-./rhel7_setup_part_one.sh
+## Troubleshooting and Overrides
 
-RHEL8
-./rhel8_setup_part_one.sh
+### Start
 
-Ubuntu 20.04
-./setup_part_one.sh
-```
-
-Communicate the public key listed and pasted at the end of the setup_part_one run to Lightup:
-
-```
-# send public key to Lightup for activation
-```
-
-After getting a go-ahead from Lightup to proceed to part two of setup, run the following:
-
-```
-./setup_part_two.sh
-```
-
-## Start
-
-Start the agent using:
+Start the Lightup manager using:
 
 ```
 ./connect.sh
 ```
 
-## Stop
+### Stop
 
-Stop the agent using:
+Stop the Lightup manager using:
 
 ```
 ./disconnect.sh
 ```
 
-Stopping the agent will take away access from Lightup.
+Stopping the Lightup manager will take away access from Lightup.
 
 
-## Uninstall
+### Uninstall
 
 Clean out the setup:
 

@@ -2,3 +2,5 @@
 user_config.sh
 keys/
 generated/
+*.pid
+license

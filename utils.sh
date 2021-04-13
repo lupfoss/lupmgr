@@ -119,7 +119,7 @@ detect_lsb_dist() {
         echo >&2 "Contact Lightup support support@lightup.ai"
         exit 1
     else
-        echo $LB_DIST
+        echo $LSB_DIST
         echo $DIST_VERSION
     fi
 }
