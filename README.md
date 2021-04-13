@@ -2,18 +2,24 @@
 
 ## Setup
 
-Run the following command with values provided to you for your account:
+Run the following commands with values provided to you for your account:
 
 ```
-LIGHTUP_TLA=<tla> LIGHTUP_TOKEN=<token> LIGHTUP_MGR_VERSION=<version> bash -c $(curl -L https://raw.githubusercontent.com/lupfoss/lupmgr/${LIGHTUP_MGR_VERSION}/bootstrap.sh)
+LIGHTUP_MGR_VERSION=v0.2 curl -H 'Cache-Control: no-cache' -L https://raw.githubusercontent.com/lupfoss/lupmgr/${LIGHTUP_MGR_VERSION}/bootstrap.sh > bootstrap.sh && chmod +x bootstrap.sh
+LIGHTUP_TLA=<tla> LIGHTUP_TOKEN=<token> ./bootstrap.sh
 ```
 
 Examples:
 
 ```
-LIGHTUP_TLA=dum LIGHTUP_TOKEN=e3976956-9ef0-44c5-a978-2ee9149e1234 LIGHTUP_MGR_VERSION=main bash -c ...
-LIGHTUP_TLA=dum LIGHTUP_TOKEN=e3976956-9ef0-44c5-a978-2ee9149e1234 LIGHTUP_MGR_VERSION=onecmd bash -c ...
-LIGHTUP_TLA=dum LIGHTUP_TOKEN=e3976956-9ef0-44c5-a978-2ee9149e1234 LIGHTUP_MGR_VERSION=v0.2 bash -c ...
+LIGHTUP_MGR_VERSION=main curl -H ...
+LIGHTUP_TLA=dum LIGHTUP_TOKEN=e3976956-9ef0-44c5-a978-2ee9149e1234 ./bootstrap.sh
+
+LIGHTUP_MGR_VERSION=onecmd curl -H ...
+LIGHTUP_TLA=dum LIGHTUP_TOKEN=e3976956-9ef0-44c5-a978-2ee9149e1234 ./bootstrap.sh
+
+LIGHTUP_MGR_VERSION=v0.2 curl -H ...
+LIGHTUP_TLA=dum LIGHTUP_TOKEN=e3976956-9ef0-44c5-a978-2ee9149e1234 ./bootstrap.sh
 ```
 
 ## Troubleshooting and Overrides
