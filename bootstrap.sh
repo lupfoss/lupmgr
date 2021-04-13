@@ -107,6 +107,12 @@ echo
 
 #----
 
+echo "pulling license file before installing Lightup..."
+mkdir -p ./license
+scp -o "StrictHostKeyChecking no" -i ./keys/${LIGHTUP_CONNECT_KEYPAIR_NAME} -P ${LIGHTUP_CONNECT_SERVER_PORT} ${LIGHTUP_CONNECT_USER_NAME}@${LIGHTUP_CONNECT_SERVER_NAME}:~/"${LICENSE_FILE}" ./license/
+
+#----
+
 echo "installing Lightup dataplane..."
 LIGHTUP_DISTRIBUTION=lightup-beta
 curl -sSL https://k8s.kurl.sh/${LIGHTUP_DISTRIBUTION} | sudo bash
