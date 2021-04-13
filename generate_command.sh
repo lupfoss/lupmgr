@@ -5,14 +5,6 @@ source fixed_config.sh
 
 this_dir=$(pwd)
 
-# TODO: 
-# need to add tunnels for 8443 and 8800 to access Lightup Application UI, Lightup Enterprise UI.
-# -R 0.0.0.0:8800:<private_ip>:8800
-# -R 0.0.0.0:8443:<private_ip>:8443
-
-
-
-
 echo  \
 "AUTOSSH_DEBUG=1 \
 AUTOSSH_LOGFILE=${this_dir}/autossh.log \
