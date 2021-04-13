@@ -191,11 +191,11 @@ discover_private_ip() {
     if [ "$_status" -eq "0" ] && [ -n "$_out" ]; then
         if is_valid_ipv4 "$_out" || is_valid_ipv6 "$_out"; then
             PRIVATE_ADDRESS=$_out
-            echo $PRIVATE_ADDRESS}
+            echo $PRIVATE_ADDRESS
         fi
         return
     fi    
-
+}
 
 # uncomment this to run as a standalone script for testing
 
