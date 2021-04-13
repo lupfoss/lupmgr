@@ -1,6 +1,8 @@
 # utility functions
 # use in other script with the following line:
 #       source utils.sh
+#
+# uncomment out main at the bottom of this file to test this locally
 
 
 log_success() {
@@ -180,11 +182,28 @@ discover_public_ip() {
     fi
 }
 
-main() {
-    discover_public_ip
-
-    detect_lsb_dist
-
+discover_private_ip() {
+    # assume eth0 is the private IP address
+    set +e
+    _out="$(ifconfig | grep -A 1 'eth0' | tail -1 | cut -d ':' -f 2 | cut -d ' ' -f 1)"
+    _status=$?
+    set -e
+    if [ "$_status" -eq "0" ] && [ -n "$_out" ]; then
+        if is_valid_ipv4 "$_out" || is_valid_ipv6 "$_out"; then
+            PRIVATE_ADDRESS=$_out
+            echo $PRIVATE_ADDRESS
+        fi
+        return
+    fi    
 }
 
-main "$@"
+# uncomment this to run as a standalone script for testing
+
+# main() {
+#     require_root_user
+#     detect_lsb_dist
+#     discover_private_ip
+#     discover_public_ip
+# }
+
+# main "$@"
