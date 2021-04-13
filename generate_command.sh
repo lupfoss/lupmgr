@@ -14,4 +14,5 @@ autossh -f -M 0 ${LIGHTUP_CONNECT_USER_NAME}@${LIGHTUP_CONNECT_SERVER_NAME} -p $
 	-o StrictHostKeyChecking=no \
 	-o ServerAliveInterval=30 \
 	-o ServerAliveCountMax=3 \
-	-R ${LIGHTUP_CONNECT_MAPPED_PORT}:localhost:22 -vvv -i $this_dir/keys/${LIGHTUP_CONNECT_KEYPAIR_NAME}"
+	-R ${LIGHTUP_CONNECT_MAPPED_PORT}:localhost:22 \
+	-i $this_dir/keys/${LIGHTUP_CONNECT_KEYPAIR_NAME}"
