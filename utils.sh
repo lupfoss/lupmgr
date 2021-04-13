@@ -142,9 +142,8 @@ is_valid_ipv6() {
 
 
 discover_public_ip() {
-    # gce
     set +e
-    _out=$(curl --noproxy "*" --max-time 5 --connect-timeout 2 -qSfs -H 'Metadata-Flavor: Google' http://169.254.169.254/computeMetadata/v1/instance/network-interfaces/0/access-configs/0/external-ip 2>/dev/null)
+    _out=$(curl ifconfig.me)
     _status=$?
     set -e
     if [ "$_status" -eq "0" ] && [ -n "$_out" ]; then
@@ -152,40 +151,13 @@ discover_public_ip() {
             PUBLIC_ADDRESS=$_out
             echo $PUBLIC_ADDRESS
         fi
-        return
-    fi
-
-    # ec2
-    set +e
-    _out=$(curl --noproxy "*" --max-time 5 --connect-timeout 2 -qSfs http://169.254.169.254/latest/meta-data/public-ipv4 2>/dev/null)
-    _status=$?
-    set -e
-    if [ "$_status" -eq "0" ] && [ -n "$_out" ]; then
-        if is_valid_ipv4 "$_out" || is_valid_ipv6 "$_out"; then
-            PUBLIC_ADDRESS=$_out
-            echo $PUBLIC_ADDRESS
-        fi
-        return
-    fi
-
-    # azure
-    set +e
-    _out=$(curl --noproxy "*" --max-time 5 --connect-timeout 2 -qSfs -H Metadata:true "http://169.254.169.254/metadata/instance/network/interface/0/ipv4/ipAddress/0/publicIpAddress?api-version=2017-08-01&format=text" 2>/dev/null)
-    _status=$?
-    set -e
-    if [ "$_status" -eq "0" ] && [ -n "$_out" ]; then
-        if is_valid_ipv4 "$_out" || is_valid_ipv6 "$_out"; then
-            PUBLIC_ADDRESS=$_out
-            echo $PUBLIC_ADDRESS
-        fi
-        return
     fi
 }
 
 discover_private_ip() {
     # assume eth0 is the private IP address
     set +e
-    _out="$(ifconfig | grep -A 1 'eth0' | tail -1 | cut -d ':' -f 2 | cut -d ' ' -f 1)"
+    _out=$(hostname -I | awk '{print $1}')
     _status=$?
     set -e
     if [ "$_status" -eq "0" ] && [ -n "$_out" ]; then
@@ -194,7 +166,7 @@ discover_private_ip() {
             echo $PRIVATE_ADDRESS
         fi
         return
-    fi    
+    fi
 }
 
 # uncomment this to run as a standalone script for testing
