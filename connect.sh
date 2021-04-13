@@ -2,6 +2,7 @@
 
 source user_config.sh
 source fixed_config.sh
+source utils.sh
 
 set +e
 set -x

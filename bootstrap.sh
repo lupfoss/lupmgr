@@ -5,6 +5,8 @@ set -eux -o pipefail
 TLA=${LIGHTUP_TLA}
 TOK=${LIGHTUP_TOKEN}
 
+
+
 # determine distro
 
 if [[ -f /etc/lsb-release && $(grep -Eo 'DISTRIB_ID=Ubuntu' /etc/lsb-release) ]]; then
@@ -58,8 +60,10 @@ cd lupmgr && git pull && git checkout ${BRANCH}
 echo "export LIGHTUP_CUSTOMER_TLA=${TLA}" > user_config.sh
 source user_config.sh
 source fixed_config.sh
+source utils.sh
 
 #----
+
 
 mkdir -p keys
 
