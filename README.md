@@ -5,20 +5,20 @@
 Run the following commands with values provided to you for your account:
 
 ```
-LIGHTUP_MGR_VERSION=v0.2 curl -H 'Cache-Control: no-cache' -L https://raw.githubusercontent.com/lupfoss/lupmgr/${LIGHTUP_MGR_VERSION}/bootstrap.sh > bootstrap.sh && chmod +x bootstrap.sh
+curl -H 'Cache-Control: no-cache' -L https://raw.githubusercontent.com/lupfoss/lupmgr/v0.2/bootstrap.sh > bootstrap.sh && chmod +x bootstrap.sh
 LIGHTUP_TLA=<tla> LIGHTUP_TOKEN=<token> ./bootstrap.sh
 ```
 
 Examples:
 
 ```
-LIGHTUP_MGR_VERSION=main curl -H ...
+curl -H ...
 LIGHTUP_TLA=dum LIGHTUP_TOKEN=e3976956-9ef0-44c5-a978-2ee9149e1234 ./bootstrap.sh
 
-LIGHTUP_MGR_VERSION=onecmd curl -H ...
+curl -H ...
 LIGHTUP_TLA=dum LIGHTUP_TOKEN=e3976956-9ef0-44c5-a978-2ee9149e1234 ./bootstrap.sh
 
-LIGHTUP_MGR_VERSION=v0.2 curl -H ...
+curl -H ...
 LIGHTUP_TLA=dum LIGHTUP_TOKEN=e3976956-9ef0-44c5-a978-2ee9149e1234 ./bootstrap.sh
 ```
 
