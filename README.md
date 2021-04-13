@@ -36,4 +36,3 @@ Clean out the setup:
 ```
 ./uninstall.sh
 ```
-
