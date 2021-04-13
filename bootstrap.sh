@@ -4,6 +4,7 @@ set -eux -o pipefail
 
 TLA=${LIGHTUP_TLA}
 TOK=${LIGHTUP_TOKEN}
+BRANCH=${LIGHTUP_BRANCH:-main}
 
 
 
@@ -53,7 +54,6 @@ if [[ $DISTRO = "RHEL8" ]]; then
 fi
 
 
-BRANCH=onecmd
 [[ -d lupmgr ]] || git clone https://github.com/lupfoss/lupmgr.git
 cd lupmgr && git pull && git checkout ${BRANCH}
 
