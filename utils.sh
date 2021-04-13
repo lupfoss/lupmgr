@@ -1,5 +1,5 @@
 # utility functions
-# use in other script with the following line: 
+# use in other script with the following line:
 #       source utils.sh
 
 
