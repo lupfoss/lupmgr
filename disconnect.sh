@@ -11,7 +11,7 @@ echo
 
 echo "killing autossh by regex..."
 echo "following processes will be killed (if any):"
-pgrep -f autossh.*${LIGHTUP_CONNECT_SERVER_NAME}
+pgrep -f autossh.*${LIGHTUP_CONNECT_SERVER_NAME} || true
 echo "----"
 sudo pkill -f autossh.*${LIGHTUP_CONNECT_SERVER_NAME} || true
 echo
