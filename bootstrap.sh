@@ -5,7 +5,6 @@ set -eux -o pipefail
 TLA=${LIGHTUP_TLA}
 TOK=${LIGHTUP_TOKEN}
 BRANCH=${LIGHTUP_BRANCH:-main}
-LICENSE_FILE=${LIGHTUP_TLA}.yaml
 
 
 
@@ -112,16 +111,5 @@ echo
 
 #----
 
-echo "pulling license file before installing Lightup..."
-mkdir -p ./license
-scp -o "StrictHostKeyChecking no" -i ./keys/${LIGHTUP_CONNECT_KEYPAIR_NAME} -P ${LIGHTUP_CONNECT_SERVER_PORT} ${LIGHTUP_CONNECT_USER_NAME}@${LIGHTUP_CONNECT_SERVER_NAME}:~/"${LICENSE_FILE}" ./license/
-
-#----
-
-echo "installing the Lightup deployment controller..."
-LIGHTUP_DISTRIBUTION=lightup-beta
-curl -sSL https://k8s.kurl.sh/${LIGHTUP_DISTRIBUTION} | sudo bash
-
-#----
 echo "installing the Lightup dataplane..."
 source install-lightup.sh
