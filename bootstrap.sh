@@ -5,6 +5,7 @@ set -eux -o pipefail
 TLA=${LIGHTUP_TLA}
 TOK=${LIGHTUP_TOKEN}
 BRANCH=${LIGHTUP_BRANCH:-main}
+LICENSE_FILE=${LIGHTUP_TLA}.yaml
 
 
 
