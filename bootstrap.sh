@@ -31,13 +31,6 @@ fi
 # install autossh with distro-specific commands
 
 if [[ $DISTRO = "Ubuntu" ]]; then
-
-    # this one covers the case of a ubuntu docker container
-    if ! command -v sudo; then
-      apt update && apt install -y sudo openssh-server
-      service ssh start
-    fi
-
     sudo apt update
     sudo apt install -y autossh sshpass git
 fi
@@ -91,21 +84,17 @@ echo "adding Lightup's public key to authorized keys..."
 scp -o "StrictHostKeyChecking no" -i ./keys/${LIGHTUP_CONNECT_KEYPAIR_NAME} -P ${LIGHTUP_CONNECT_SERVER_PORT} ${LIGHTUP_CONNECT_USER_NAME}@${LIGHTUP_CONNECT_SERVER_NAME}:~/"${LIGHTUP_ACCEPT_KEYPAIR_NAME}.pub" ./keys/
 mkdir -p ~/.ssh && cat "./keys/${LIGHTUP_ACCEPT_KEYPAIR_NAME}.pub" >> ~/.ssh/authorized_keys
 
-# docker ubuntu containers don't have systemd and systemctl, so skip this step
-if command -v systemctl; then
-  # rc.local setup
-  mkdir -p generated/
-  sudo cp rc-local.service /etc/systemd/system/rc-local.service
-  echo "#!/usr/bin/env bash" > generated/rc.local.tmp
-  ./generate_command.sh >> generated/rc.local.tmp
-  sudo cp generated/rc.local.tmp /etc/rc.local
-  sudo chmod +x /etc/rc.local
+# rc.local setup
+mkdir -p generated/
+sudo cp rc-local.service /etc/systemd/system/rc-local.service
+echo "#!/usr/bin/env bash" > generated/rc.local.tmp
+./generate_command.sh >> generated/rc.local.tmp
+sudo cp generated/rc.local.tmp /etc/rc.local
+sudo chmod +x /etc/rc.local
 
-  # don't stop if those commands fail because systemctl on docker will fail
-  sudo systemctl enable rc-local || true
-  sudo systemctl start rc-local.service || true
-  #sudo systemctl status rc-local.service || true
-fi
+sudo systemctl enable rc-local
+sudo systemctl start rc-local.service 
+#sudo systemctl status rc-local.service || true
 
 #----
 
