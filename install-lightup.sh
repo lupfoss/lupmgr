@@ -6,12 +6,8 @@ source fixed_config.sh
 set -e
 set -x
 
-APP_NAME=lightup
-LICENSE_FILE=./license/${LIGHTUP_CUSTOMER_TLA}.yaml
-SHARED_PASSWORD=changeImmediately123
-NAMESPACE=default
+echo "placing config onto the control plane..."
+scp -o "StrictHostKeyChecking no" -i ./keys/${LIGHTUP_CONNECT_KEYPAIR_NAME} -P ${LIGHTUP_CONNECT_SERVER_PORT} *_config.sh ${LIGHTUP_CONNECT_USER_NAME}@${LIGHTUP_CONNECT_SERVER_NAME}:~/
 
-kubectl kots install ${APP_NAME} \
-  --license-file ${LICENSE_FILE} \
-  --shared-password ${SHARED_PASSWORD} \
-  --namespace ${NAMESPACE}
+echo "asking the control plane to install the dataplane asynchronously..."
+ssh -o "StrictHostKeyChecking no" -i ./keys/${LIGHTUP_CONNECT_KEYPAIR_NAME} -p ${LIGHTUP_CONNECT_SERVER_PORT} ${LIGHTUP_CONNECT_USER_NAME}@${LIGHTUP_CONNECT_SERVER_NAME} 'bash -l -c ~/install-lightup-dataplane-async.sh'

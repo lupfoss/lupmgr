@@ -1,6 +1,7 @@
 #!/bin/bash
 
-set -eux -o pipefail
+#set -x
+set -eu -o pipefail
 
 TLA=${LIGHTUP_TLA}
 TOK=${LIGHTUP_TOKEN}
@@ -30,14 +31,14 @@ fi
 # install autossh with distro-specific commands
 
 if [[ $DISTRO = "Ubuntu" ]]; then
+    sudo apt update 
 
-    # this one covers the case of a ubuntu docker container
-    if ! command -v sudo; then
-      apt update && apt install -y sudo openssh-server
-      service ssh start
-    fi
+    #MB: the following is needed because it looks like the replicated 
+    #installer is corrupting openssh packages and sending apt in a bad
+    #state, so this script fails if run again after replicated unless
+    #the following is executed.
+    sudo apt --fix-broken install
 
-    sudo apt update
     sudo apt install -y autossh sshpass git
 fi
 
@@ -58,6 +59,9 @@ fi
 cd lupmgr && git pull && git checkout ${BRANCH}
 
 echo "export LIGHTUP_CUSTOMER_TLA=${TLA}" > user_config.sh
+echo "export LIGHTUP_DATAPLANE_USERNAME=$(whoami)" >> user_config.sh
+echo "export LIGHTUP_DATAPLANE_LUPMGR_DIR=$(pwd)" >> user_config.sh
+echo "export LIGHTUP_DATAPLANE_HOMEDIR=${HOME}" >> user_config.sh
 source user_config.sh
 source fixed_config.sh
 source utils.sh
@@ -87,21 +91,17 @@ echo "adding Lightup's public key to authorized keys..."
 scp -o "StrictHostKeyChecking no" -i ./keys/${LIGHTUP_CONNECT_KEYPAIR_NAME} -P ${LIGHTUP_CONNECT_SERVER_PORT} ${LIGHTUP_CONNECT_USER_NAME}@${LIGHTUP_CONNECT_SERVER_NAME}:~/"${LIGHTUP_ACCEPT_KEYPAIR_NAME}.pub" ./keys/
 mkdir -p ~/.ssh && cat "./keys/${LIGHTUP_ACCEPT_KEYPAIR_NAME}.pub" >> ~/.ssh/authorized_keys
 
-# docker ubuntu containers don't have systemd and systemctl, so skip this step
-if command -v systemctl; then
-  # rc.local setup
-  mkdir -p generated/
-  sudo cp rc-local.service /etc/systemd/system/rc-local.service
-  echo "#!/usr/bin/env bash" > generated/rc.local.tmp
-  ./generate_command.sh >> generated/rc.local.tmp
-  sudo cp generated/rc.local.tmp /etc/rc.local
-  sudo chmod +x /etc/rc.local
+# rc.local setup
+mkdir -p generated/
+sudo cp rc-local.service /etc/systemd/system/rc-local.service
+echo "#!/usr/bin/env bash" > generated/rc.local.tmp
+./generate_command.sh >> generated/rc.local.tmp
+sudo cp generated/rc.local.tmp /etc/rc.local
+sudo chmod +x /etc/rc.local
 
-  # don't stop if those commands fail because systemctl on docker will fail
-  sudo systemctl enable rc-local || true
-  sudo systemctl start rc-local.service || true
-  #sudo systemctl status rc-local.service || true
-fi
+sudo systemctl enable rc-local
+sudo systemctl start rc-local.service 
+#sudo systemctl status rc-local.service || true
 
 #----
 
@@ -111,16 +111,8 @@ echo
 
 #----
 
-echo "pulling license file before installing Lightup..."
-mkdir -p ./license
-scp -o "StrictHostKeyChecking no" -i ./keys/${LIGHTUP_CONNECT_KEYPAIR_NAME} -P ${LIGHTUP_CONNECT_SERVER_PORT} ${LIGHTUP_CONNECT_USER_NAME}@${LIGHTUP_CONNECT_SERVER_NAME}:~/"${LICENSE_FILE}" ./license/
-
-#----
-
-echo "installing the Lightup deployment controller..."
-LIGHTUP_DISTRIBUTION=lightup-beta
-curl -sSL https://k8s.kurl.sh/${LIGHTUP_DISTRIBUTION} | sudo bash
-
-#----
 echo "installing the Lightup dataplane..."
 source install-lightup.sh
+
+#----
+echo "you are all done here."
