@@ -31,7 +31,14 @@ fi
 # install autossh with distro-specific commands
 
 if [[ $DISTRO = "Ubuntu" ]]; then
-    sudo apt update
+    sudo apt update 
+
+    #MB: the following is needed because it looks like the replicated 
+    #installer is corrupting openssh packages and sending apt in a bad
+    #state, so this script fails if run again after replicated unless
+    #the following is executed.
+    sudo apt --fix-broken install
+
     sudo apt install -y autossh sshpass git
 fi
 
