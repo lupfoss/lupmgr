@@ -119,4 +119,4 @@ echo "installing the Lightup dataplane..."
 source install-lightup.sh
 
 #----
-echo "You are all done here. Lightup dataplane installation will take 10-15 minutes."
+echo "you are all done here."
