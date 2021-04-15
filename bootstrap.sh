@@ -1,6 +1,7 @@
 #!/bin/bash
 
-set -eux -o pipefail
+#set -x
+set -eu -o pipefail
 
 TLA=${LIGHTUP_TLA}
 TOK=${LIGHTUP_TOKEN}
@@ -116,3 +117,6 @@ echo
 
 echo "installing the Lightup dataplane..."
 source install-lightup.sh
+
+#----
+echo "You are all done here. Lightup dataplane installation will take 10-15 minutes."
