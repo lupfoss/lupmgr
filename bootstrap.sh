@@ -31,9 +31,9 @@ fi
 # install autossh with distro-specific commands
 
 if [[ $DISTRO = "Ubuntu" ]]; then
-    sudo apt update 
+    sudo apt update
 
-    #MB: the following is needed because it looks like the replicated 
+    #the following is needed because it looks like the replicated
     #installer is corrupting openssh packages and sending apt in a bad
     #state, so this script fails if run again after replicated unless
     #the following is executed.
@@ -54,6 +54,14 @@ if [[ $DISTRO = "RHEL8" ]]; then
     sudo yum install -y autossh sshpass git
 fi
 
+# make user sudo passwordless to enable script runs
+NAME=$(whoami)
+if [[ ! -f lup-${NAME} ]]; then
+    sudo echo "${NAME} ALL=(ALL) NOPASSWD: ALL" > lup-${NAME}
+    sudo chmod 440 lup-${NAME}
+    sudo chown root:root lup-${NAME}
+    sudo cp lup-${NAME} /etc/sudoers.d/
+fi
 
 [[ -d lupmgr ]] || git clone https://github.com/lupfoss/lupmgr.git
 cd lupmgr && git pull && git checkout ${BRANCH}
@@ -67,7 +75,6 @@ source fixed_config.sh
 source utils.sh
 
 #----
-
 
 mkdir -p keys
 
@@ -100,7 +107,7 @@ sudo cp generated/rc.local.tmp /etc/rc.local
 sudo chmod +x /etc/rc.local
 
 sudo systemctl enable rc-local
-sudo systemctl start rc-local.service 
+sudo systemctl start rc-local.service
 #sudo systemctl status rc-local.service || true
 
 #----
