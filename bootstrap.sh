@@ -119,8 +119,8 @@ echo
 #----
 
 if [[ $INSTALL_DATAPLANE = "1" ]]; then
-echo "installing the Lightup dataplane..."
-source install-lightup.sh
+  echo "installing the Lightup dataplane..."
+  source install-lightup.sh
 fi
 
 #----
