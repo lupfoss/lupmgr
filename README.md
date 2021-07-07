@@ -1,4 +1,4 @@
-# lupmgr
+# Lightup Agent Manager
 
 ## Setup
 
@@ -12,14 +12,11 @@ LIGHTUP_TLA=<tla> LIGHTUP_TOKEN=<token> ./bootstrap.sh
 Examples:
 
 ```
-curl -H ...
+# Install Lightup tunnel and dataplane
 LIGHTUP_TLA=dum LIGHTUP_TOKEN=e3976956-9ef0-44c5-a978-2ee9149e1234 ./bootstrap.sh
 
-curl -H ...
-LIGHTUP_TLA=dum LIGHTUP_TOKEN=e3976956-9ef0-44c5-a978-2ee9149e1234 ./bootstrap.sh
-
-curl -H ...
-LIGHTUP_TLA=dum LIGHTUP_TOKEN=e3976956-9ef0-44c5-a978-2ee9149e1234 ./bootstrap.sh
+# Install only the Lightup tunnel
+LIGHTUP_TLA=dum LIGHTUP_TOKEN=e3976956-9ef0-44c5-a978-2ee9149e1234 LIGHTUP_INSTALL=0 ./bootstrap.sh
 ```
 
 ## Troubleshooting and Overrides

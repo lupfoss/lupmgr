@@ -6,7 +6,7 @@ set -eu -o pipefail
 TLA=${LIGHTUP_TLA}
 TOK=${LIGHTUP_TOKEN}
 BRANCH=${LIGHTUP_BRANCH:-main}
-
+INSTALL_DATAPLANE="${LIGHTUP_INSTALL:-1}"
 
 
 # determine distro
@@ -118,8 +118,10 @@ echo
 
 #----
 
-echo "installing the Lightup dataplane..."
-source install-lightup.sh
+if [[ $INSTALL_DATAPLANE = "1" ]]; then
+  echo "installing the Lightup dataplane..."
+  source install-lightup.sh
+fi
 
 #----
 echo "you are all done here."
