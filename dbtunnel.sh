@@ -1,32 +1,26 @@
 #!/usr/bin/env bash
 
-# Setup the DB_HOST and DB_PORT variables before running this script
-
-# DB Host: IP or DNS for the DB
-# Eg:
+# This script creates a tunnel to allow Lightup to connect to DBs that are
+# internal to a customer network.
+#
+# Usage:
+# DB_HOST=<host> DB_PORT=<port> ./dbtunnel.sh
+#
+# Examples for DB_HOST:
 # DB_HOST=192.168.86.22
 # DB_HOST=analytics.us-east-1.redshift.amazonaws.com
-
-DB_HOST=
-
-# Port
-# Eg:
+#
+# Examples for DB_PORT:
 # DB_PORT=5432
 # DB_PORT=5439
 
-DB_PORT=
-
-
-# -------------------- Do not edit below this line ---------------------------
-
-if [[ "${DB_HOST}" = "" ]]; then
-    echo "Error - Please fill in DB_HOST - the name or IP of the database"
-    exit 1
-fi
-
-if [[ "${DB_PORT}" = "" ]]; then
-    echo "Error - Please fill in DB_PORT - the port to connect to on the database"
-    exit 1
+if [[ "${DB_HOST}" = "" ||  "${DB_PORT}" = "" ]]; then
+	echo "Error - DB_HOST or DB_PORT is not set"
+	echo
+	echo "Usage:"
+	echo "DB_HOST=<host> DB_PORT=<port> ./dbtunnel.sh"
+	echo
+	exit 1
 fi
 
 # shellcheck source=user_config.sh
@@ -50,7 +44,7 @@ command="autossh -f -M 0 ${LIGHTUP_CONNECT_USER_NAME}@${LIGHTUP_CONNECT_SERVER_N
 DEBUG=0
 
 if [[ "${DEBUG}" = "1" ]]; then
-    echo "${command}"
+	echo "${command}"
 else
-    eval "${command}"
+	eval "${command}"
 fi
