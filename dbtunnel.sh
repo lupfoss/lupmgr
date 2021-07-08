@@ -25,7 +25,7 @@ if [[ "${DB_HOST}" = "" ]]; then
 fi
 
 if [[ "${DB_PORT}" = "" ]]; then
-    echo "Please fill in DB_PORT - the port to connect to on the database"
+    echo "Error - Please fill in DB_PORT - the port to connect to on the database"
     exit 1
 fi
 
