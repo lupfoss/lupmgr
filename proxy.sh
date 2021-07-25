@@ -11,6 +11,10 @@
 # PROXY_USER
 # PROXY_USER_PASSWORD
 
+# example usage of script:
+# PROXY_SERVER=proxy.xxx.com PROXY_PORT=1233 PROXY_USER=xxxuser PROXY_PASSWORD=xxxpasswd ./proxy.sh
+
+
 source fixed_config.sh
 
 if [[ "${PROXY_SERVER}" = "" || "${PROXY_PORT}" = "" ]]; then
