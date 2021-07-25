@@ -12,8 +12,8 @@
 # PROXY_USER_PASSWORD
 
 # example usage of script:
-# PROXY_SERVER=proxy.xxx.com PROXY_PORT=1233 PROXY_USER=xxxuser PROXY_PASSWORD=xxxpasswd ./proxy.sh
-# PROXY_SERVER=proxy.xxx.com PROXY_PORT=1233 ./proxy.sh
+# LIGHTUP_TLA=dum PROXY_SERVER=proxy.dum.com PROXY_PORT=1233 PROXY_USER=dumuser PROXY_PASSWORD=dumpasswd ./proxy.sh
+# LIGHTUP_TLA=dum PROXY_SERVER=proxy.dum.com PROXY_PORT=1233 ./proxy.sh
 
 source fixed_config.sh
 
