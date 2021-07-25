@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
-if [[ "${LIGHTUP_CUSTOMER_TLA}" = "" ]]; then
-    echo "Error - LIGHTUP_CUSTOMER_TLA is not set"
+if [[ "${LIGHTUP_TLA}" = "" ]]; then
+    echo "Error - LIGHTUP_TLA is not set"
     exit 1
 fi
 
@@ -9,9 +9,9 @@ fi
 export LIGHTUP_CONNECT_SERVER_PORT=22
 
 # Do not edit the variables below:
-export LIGHTUP_CONNECT_KEYPAIR_NAME="${LIGHTUP_CUSTOMER_TLA}-to-lightup"
-export LIGHTUP_ACCEPT_KEYPAIR_NAME="lightup-to-${LIGHTUP_CUSTOMER_TLA}"
-export LIGHTUP_CONNECT_SERVER_NAME="connect.${LIGHTUP_CUSTOMER_TLA}.lightup.ai"
+export LIGHTUP_CONNECT_KEYPAIR_NAME="${LIGHTUP_TLA}-to-lightup"
+export LIGHTUP_ACCEPT_KEYPAIR_NAME="lightup-to-${LIGHTUP_TLA}"
+export LIGHTUP_CONNECT_SERVER_NAME="connect.${LIGHTUP_TLA}.lightup.ai"
 export LIGHTUP_CONNECT_MAPPED_PORT=9000
 export LIGHTUP_CONNECT_USER_NAME="ubuntu"
 export LIGHTUP_DATAPLANE_ADMIN_PORT=8800

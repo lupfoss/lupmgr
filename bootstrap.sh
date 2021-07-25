@@ -3,7 +3,6 @@
 #set -x
 set -eu -o pipefail
 
-TLA=${LIGHTUP_TLA}
 TOK=${LIGHTUP_TOKEN}
 BRANCH=${LIGHTUP_BRANCH:-main}
 INSTALL_DATAPLANE="${LIGHTUP_INSTALL:-1}"
@@ -66,7 +65,7 @@ fi
 [[ -d lupmgr ]] || git clone https://github.com/lupfoss/lupmgr.git
 cd lupmgr && git pull && git checkout ${BRANCH}
 
-echo "export LIGHTUP_CUSTOMER_TLA=${TLA}" > user_config.sh
+echo "export LIGHTUP_TLA=${LIGHTUP_TLA}" > user_config.sh
 echo "export LIGHTUP_DATAPLANE_USERNAME=$(whoami)" >> user_config.sh
 echo "export LIGHTUP_DATAPLANE_LUPMGR_DIR=$(pwd)" >> user_config.sh
 echo "export LIGHTUP_DATAPLANE_HOMEDIR=${HOME}" >> user_config.sh
