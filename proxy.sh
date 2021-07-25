@@ -13,7 +13,7 @@
 
 # example usage of script:
 # PROXY_SERVER=proxy.xxx.com PROXY_PORT=1233 PROXY_USER=xxxuser PROXY_PASSWORD=xxxpasswd ./proxy.sh
-
+# PROXY_SERVER=proxy.xxx.com PROXY_PORT=1233 ./proxy.sh
 
 source fixed_config.sh
 
