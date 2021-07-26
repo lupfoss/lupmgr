@@ -31,6 +31,10 @@ fi
 server=${LIGHTUP_CONNECT_SERVER_NAME}
 proxy_command="ProxyCommand ncat --proxy ${PROXY_SERVER}:${PROXY_PORT} %h %p ${AUTH_COMMAND}"
 
+if [ -f ~/.ssh/config ]; then
+    mv ~/.ssh/config ~/.ssh/config.old
+fi
+
 {
     echo ""
     echo "Host ${server}"
