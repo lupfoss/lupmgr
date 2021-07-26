@@ -35,4 +35,4 @@ proxy_command="ProxyCommand ncat --proxy ${PROXY_SERVER}:${PROXY_PORT} %h %p ${A
     echo ""
     echo "Host ${server}"
     echo "    ${proxy_command}"
-}  >> ~/.ssh/config
+}  > ~/.ssh/config

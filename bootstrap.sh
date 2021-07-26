@@ -22,7 +22,7 @@ if [[ -f /etc/redhat-release && $(grep -Eo 'release 8\.' /etc/redhat-release) ]]
     DISTRO="RHEL8"
 fi
 
-if [[ x$DISTRO = x ]]; then
+if [[ $DISTRO = "" ]]; then
     echo "error: distribution not supported"
     exit 1
 fi
