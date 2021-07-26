@@ -15,6 +15,8 @@
 # LIGHTUP_TLA=dum PROXY_SERVER=proxy.dum.com PROXY_PORT=1233 PROXY_USER=dumuser PROXY_PASSWORD=dumpasswd ./proxy.sh
 # LIGHTUP_TLA=dum PROXY_SERVER=proxy.dum.com PROXY_PORT=1233 ./proxy.sh
 
+set -e
+
 source fixed_config.sh
 
 if [[ "${PROXY_SERVER}" = "" || "${PROXY_PORT}" = "" ]]; then
@@ -36,7 +38,8 @@ if [ -f ~/.ssh/config ]; then
 fi
 
 {
-    echo ""
     echo "Host ${server}"
     echo "    ${proxy_command}"
 }  > ~/.ssh/config
+
+echo "Success! Updated proxy settings for Lightup"
