@@ -1,1 +1,1 @@
-export LIGHTUP_CUSTOMER_TLA="<value>"
+export LIGHTUP_TLA="<value>"

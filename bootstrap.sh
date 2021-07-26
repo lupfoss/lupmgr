@@ -3,7 +3,6 @@
 #set -x
 set -eu -o pipefail
 
-TLA=${LIGHTUP_TLA}
 TOK=${LIGHTUP_TOKEN}
 BRANCH=${LIGHTUP_BRANCH:-main}
 INSTALL_DATAPLANE="${LIGHTUP_INSTALL:-1}"
@@ -23,7 +22,7 @@ if [[ -f /etc/redhat-release && $(grep -Eo 'release 8\.' /etc/redhat-release) ]]
     DISTRO="RHEL8"
 fi
 
-if [[ x$DISTRO = x ]]; then
+if [[ $DISTRO = "" ]]; then
     echo "error: distribution not supported"
     exit 1
 fi
@@ -39,19 +38,19 @@ if [[ $DISTRO = "Ubuntu" ]]; then
     #the following is executed.
     sudo apt --fix-broken install
 
-    sudo apt install -y autossh sshpass git
+    sudo apt install -y autossh sshpass git nmap-ncat
 fi
 
 if [[ $DISTRO = "RHEL7" ]]; then
     sudo yum install https://dl.fedoraproject.org/pub/epel/epel-release-latest-7.noarch.rpm -y
     sudo yum upgrade -y
-    sudo yum install -y autossh sshpass git
+    sudo yum install -y autossh sshpass git nmap-ncat
 fi
 
 if [[ $DISTRO = "RHEL8" ]]; then
     sudo yum install https://dl.fedoraproject.org/pub/epel/epel-release-latest-8.noarch.rpm -y
     sudo yum upgrade -y
-    sudo yum install -y autossh sshpass git
+    sudo yum install -y autossh sshpass git nmap-ncat
 fi
 
 # make user sudo passwordless to enable script runs
@@ -66,7 +65,7 @@ fi
 [[ -d lupmgr ]] || git clone https://github.com/lupfoss/lupmgr.git
 cd lupmgr && git pull && git checkout ${BRANCH}
 
-echo "export LIGHTUP_CUSTOMER_TLA=${TLA}" > user_config.sh
+echo "export LIGHTUP_TLA=${LIGHTUP_TLA}" > user_config.sh
 echo "export LIGHTUP_DATAPLANE_USERNAME=$(whoami)" >> user_config.sh
 echo "export LIGHTUP_DATAPLANE_LUPMGR_DIR=$(pwd)" >> user_config.sh
 echo "export LIGHTUP_DATAPLANE_HOMEDIR=${HOME}" >> user_config.sh
