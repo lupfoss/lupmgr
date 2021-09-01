@@ -38,19 +38,19 @@ if [[ $DISTRO = "Ubuntu" ]]; then
     #the following is executed.
     sudo apt --fix-broken install
 
-    sudo apt install -y autossh sshpass git ncat
+    sudo apt install -y autossh sshpass git
 fi
 
 if [[ $DISTRO = "RHEL7" ]]; then
     sudo yum install https://dl.fedoraproject.org/pub/epel/epel-release-latest-7.noarch.rpm -y
     sudo yum upgrade -y
-    sudo yum install -y autossh sshpass git ncat
+    sudo yum install -y autossh sshpass git
 fi
 
 if [[ $DISTRO = "RHEL8" ]]; then
     sudo yum install https://dl.fedoraproject.org/pub/epel/epel-release-latest-8.noarch.rpm -y
     sudo yum upgrade -y
-    sudo yum install -y autossh sshpass git ncat
+    sudo yum install -y autossh sshpass git
 fi
 
 # make user sudo passwordless to enable script runs
