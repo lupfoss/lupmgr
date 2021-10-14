@@ -66,6 +66,7 @@ fi
 cd lupmgr && git pull && git checkout ${BRANCH}
 
 echo "export LIGHTUP_TLA=${LIGHTUP_TLA}" > user_config.sh
+echo "export INSTALL_DATAPLANE=${INSTALL_DATAPLANE}" >> user_config.sh
 echo "export LIGHTUP_DATAPLANE_USERNAME=$(whoami)" >> user_config.sh
 echo "export LIGHTUP_DATAPLANE_LUPMGR_DIR=$(pwd)" >> user_config.sh
 echo "export LIGHTUP_DATAPLANE_HOMEDIR=${HOME}" >> user_config.sh
