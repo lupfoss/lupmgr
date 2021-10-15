@@ -9,9 +9,14 @@ set -x
 
 this_dir=$(pwd)
 
-if [[ -f autossh.pid ]]; then
-	echo "ERROR: autossh.pid already exists, not starting another autossh, run ./disconnect.sh first and then try again"
+if [[ -f autossh-connect.pid ]]; then
+	echo "ERROR: autossh-connect.pid already exists, not starting another autossh, run ./disconnect.sh first and then try again"
 	exit 1
+fi
+
+if [[ -f autossh-dataplane.pid ]]; then
+    echo "ERROR: autossh-dataplane.pid already exists, not starting another autossh, run ./disconnect.sh first and then try again"
+    exit 1
 fi
 
 mkdir -p generated
@@ -33,7 +38,11 @@ if [[ ! $err -eq "0" ]]; then
 	tail /var/log/syslog | grep autossh
 	echo
 
-	echo "** output of cat autossh.log:"
-	cat autossh.log
+	echo "** output of cat autossh-dataplane.log:"
+	cat autossh-dataplane.log
 	echo
+
+    echo "** output of cat autossh-connect.log:"
+    cat autossh-connect.log
+    echo
 fi
