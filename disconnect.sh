@@ -6,7 +6,8 @@ source user_config.sh
 source fixed_config.sh
 
 echo "killing autossh by pid first..."
-( [[ ! -f autossh.pid ]] && echo "no autossh.pid file found" ) || ( cat autossh.pid && sudo kill $(cat autossh.pid) )
+( [[ ! -f autossh-dataplane.pid ]] && echo "no autossh-dataplane.pid file found" ) || ( cat autossh-dataplane.pid && sudo kill $(cat autossh-dataplane.pid) )
+( [[ ! -f autossh-connect.pid ]] && echo "no autossh-connect.pid file found" ) || ( cat autossh-connect.pid && sudo kill $(cat autossh-connect.pid) )
 echo
 
 echo "killing autossh by regex..."
@@ -20,5 +21,7 @@ echo "** output of ps aux | grep autossh:"
 ps aux | grep autossh
 echo
 
-sudo rm -rf autossh.pid
-sudo rm -rf autossh.log
+sudo rm -rf autossh-dataplane.pid
+sudo rm -rf autossh-dataplane.log
+sudo rm -rf autossh-connect.pid
+sudo rm -rf autossh-connect.log
