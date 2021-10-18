@@ -6,6 +6,7 @@ set -eu -o pipefail
 TOK=${LIGHTUP_TOKEN}
 BRANCH=${LIGHTUP_BRANCH:-main}
 INSTALL_DATAPLANE="${LIGHTUP_INSTALL:-1}"
+LIGHTUP_CONNECT_MAPPED_PORT="${CONNECT_PORT:-9000}"
 
 
 # determine distro
@@ -67,6 +68,7 @@ cd lupmgr && git pull && git checkout ${BRANCH}
 
 echo "export LIGHTUP_TLA=${LIGHTUP_TLA}" > user_config.sh
 echo "export INSTALL_DATAPLANE=${INSTALL_DATAPLANE}" >> user_config.sh
+echo "export LIGHTUP_CONNECT_MAPPED_PORT=${LIGHTUP_CONNECT_MAPPED_PORT}" >> user_config.sh
 echo "export LIGHTUP_DATAPLANE_USERNAME=$(whoami)" >> user_config.sh
 echo "export LIGHTUP_DATAPLANE_LUPMGR_DIR=$(pwd)" >> user_config.sh
 echo "export LIGHTUP_DATAPLANE_HOMEDIR=${HOME}" >> user_config.sh
