@@ -14,21 +14,28 @@ then
 	-R 0.0.0.0:${LIGHTUP_DATAPLANE_APP_PORT}:${private_ip}:${LIGHTUP_DATAPLANE_APP_PORT} \
 	-R 0.0.0.0:${LIGHTUP_DATAPLANE_K8S_PORT}:${private_ip}:${LIGHTUP_DATAPLANE_K8S_PORT}"
 else
-	reverse_port_list="-R 0.0.0.0:${DB_PORT}:${DB_HOST}:${DB_PORT}"
+	if [ -n "$DB_PORT" ] && [ -n "$DB_HOST" ]
+	then
+		reverse_port_list="-R 0.0.0.0:${DB_PORT}:${DB_HOST}:${DB_PORT}"
+	fi
 fi
 
-echo  \
-"AUTOSSH_DEBUG=1 \
-AUTOSSH_LOGFILE=${this_dir}/autossh-dataplane.log \
-AUTOSSH_PIDFILE=${this_dir}/autossh-dataplane.pid \
-autossh -f -M 0 ${LIGHTUP_CONNECT_USER_NAME}@${LIGHTUP_CONNECT_SERVER_NAME} -p ${LIGHTUP_CONNECT_SERVER_PORT} -N \
-	-o ExitOnForwardFailure=yes \
-	-o UserKnownHostsFile=/dev/null \
-	-o StrictHostKeyChecking=no \
-	-o ServerAliveInterval=30 \
-	-o ServerAliveCountMax=3 \
-	${reverse_port_list} \
-	-vvv -i $this_dir/keys/${LIGHTUP_CONNECT_KEYPAIR_NAME}"
+if [ -n "$reverse_port_list" ]
+then
+	echo  \
+	"AUTOSSH_DEBUG=1 \
+	AUTOSSH_LOGFILE=${this_dir}/autossh-dataplane.log \
+	AUTOSSH_PIDFILE=${this_dir}/autossh-dataplane.pid \
+	autossh -f -M 0 ${LIGHTUP_CONNECT_USER_NAME}@${LIGHTUP_CONNECT_SERVER_NAME} -p ${LIGHTUP_CONNECT_SERVER_PORT} -N \
+		-o ExitOnForwardFailure=yes \
+		-o UserKnownHostsFile=/dev/null \
+		-o StrictHostKeyChecking=no \
+		-o ServerAliveInterval=30 \
+		-o ServerAliveCountMax=3 \
+		${reverse_port_list} \
+		-vvv -i $this_dir/keys/${LIGHTUP_CONNECT_KEYPAIR_NAME}"
+fi
+
 echo  \
 "AUTOSSH_DEBUG=1 \
 AUTOSSH_LOGFILE=${this_dir}/autossh-connect.log \
