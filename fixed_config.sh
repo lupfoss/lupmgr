@@ -9,7 +9,6 @@ fi
 export LIGHTUP_CONNECT_SERVER_PORT=22
 
 # Do not edit the variables below:
-export LIGHTUP_CONNECT_KEYPAIR_NAME="${LIGHTUP_TLA}-to-lightup"
 export LIGHTUP_ACCEPT_KEYPAIR_NAME="lightup-to-${LIGHTUP_TLA}"
 export LIGHTUP_CONNECT_SERVER_NAME="connect.${LIGHTUP_TLA}.lightup.ai"
 export LIGHTUP_CONNECT_USER_NAME="ubuntu"
