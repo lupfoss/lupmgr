@@ -24,8 +24,9 @@ if [[ -f /etc/redhat-release && $(grep -Eo 'release 8\.' /etc/redhat-release) ]]
     DISTRO="RHEL8"
 fi
 
-if [[ $DISTRO = "" ]]; then
-    echo "error: distribution not supported"
+if [[ ${DISTRO-} = "" ]]; then
+    echo "error: distro not supported, please see list of supported platforms at: "
+    echo "https://docs.lightup.ai/lightup-quickstart/deployment/lightup-hybrid-quick-start#create-a-vm"
     exit 1
 fi
 
