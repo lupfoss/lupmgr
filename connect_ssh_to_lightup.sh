@@ -2,9 +2,16 @@
 
 set -e
 
+if systemctl is-active --quiet lightup-ssh-connect ; then
+    echo "lightup-ssh-connect service is already running. To reconfigure this service please run 'systemctl stop lightup-ssh-connect.service' first"
+    exit 1
+fi
+
 source init.sh
 source user_config.sh
 source fixed_config.sh
+
+echo "Generating lightup-ssh-connect service..."
 
 this_dir=$(pwd)
 
@@ -31,4 +38,5 @@ sudo chmod +x /opt/lightup/lightup-ssh-connect-service.sh
 
 sudo systemctl enable lightup-ssh-connect
 sudo systemctl start lightup-ssh-connect.service
-#sudo systemctl status lightup-ssh-connect.service || true
+
+echo "lightup-ssh-connect service started"

@@ -2,29 +2,33 @@
 
 set -e
 
+if systemctl is-active --quiet lightup-dataplane-connect ; then
+    echo "lightup-dataplane-connect service is already running. To reconfigure this service please run 'systemctl stop lightup-dataplane-connect.service' first"
+    exit 1
+fi
+
 source init.sh
 source user_config.sh
 source fixed_config.sh
 source utils.sh
 
+echo "Generating lightup-dataplane-connect service..."
+
 this_dir=$(pwd)
 private_ip=$(discover_private_ip)
 
-if [[ $INSTALL_DATAPLANE = "1" ]]
-then
+if [[ $INSTALL_DATAPLANE = "1" ]]; then
     reverse_port_list="\
     -R 0.0.0.0:${LIGHTUP_DATAPLANE_ADMIN_PORT}:${private_ip}:${LIGHTUP_DATAPLANE_ADMIN_PORT} \
     -R 0.0.0.0:${LIGHTUP_DATAPLANE_APP_PORT}:${private_ip}:${LIGHTUP_DATAPLANE_APP_PORT} \
     -R 0.0.0.0:${LIGHTUP_DATAPLANE_K8S_PORT}:${private_ip}:${LIGHTUP_DATAPLANE_K8S_PORT}"
 else
-    if [ -n "$DB_PORT" ] && [ -n "$DB_HOST" ]
-    then
+    if [[ ${DB_PORT-} && ${DB_HOST-} ]]; then
         reverse_port_list="-R 0.0.0.0:${DB_PORT}:${DB_HOST}:${DB_PORT}"
     fi
 fi
 
-if [ -n "$reverse_port_list" ]
-then
+if [[ ${reverse_port_list-} ]]; then
     mkdir -p generated/
     sudo cp lightup-dataplane-connect.service /etc/systemd/system/lightup-dataplane-connect.service
 
@@ -48,6 +52,8 @@ then
 
     sudo systemctl enable lightup-dataplane-connect
     sudo systemctl start lightup-dataplane-connect.service
+
+    echo "lightup-dataplane-connect service started"
 else
     echo "No dataplane tunnels to create. INSTALL_DATAPLANE is disabled for hybrid mode and DB_PORT and/or DB_HOST are not set for DB tunnel mode"
 fi
