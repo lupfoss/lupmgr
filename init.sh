@@ -44,13 +44,13 @@ if [[ $DISTRO = "Ubuntu" ]]; then
 fi
 
 if [[ $DISTRO = "RHEL7" ]]; then
-    sudo yum install https://dl.fedoraproject.org/pub/epel/epel-release-latest-7.noarch.rpm -y
+    rpm -qa | grep epel-release-7 || sudo yum install https://dl.fedoraproject.org/pub/epel/epel-release-latest-7.noarch.rpm -y
     sudo yum upgrade -y
     sudo yum install -y autossh sshpass git
 fi
 
 if [[ $DISTRO = "RHEL8" ]]; then
-    sudo yum install https://dl.fedoraproject.org/pub/epel/epel-release-latest-8.noarch.rpm -y
+    rpm -qa | grep epel-release-8 || sudo yum install https://dl.fedoraproject.org/pub/epel/epel-release-latest-8.noarch.rpm -y
     sudo yum upgrade -y
     sudo yum install -y autossh sshpass git
 fi
