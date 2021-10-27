@@ -1,0 +1,14 @@
+[Unit]
+ Description=AutoSSH tunnel service for Lightup SSH access
+ ConditionPathExists=/opt/lightup/lightup-ssh-connect-service.sh
+
+[Service]
+ Type=forking
+ ExecStart=/opt/lightup/lightup-ssh-connect-service.sh start
+ TimeoutSec=0
+ StandardOutput=tty
+ RemainAfterExit=yes
+ SysVStartPriority=99
+
+[Install]
+ WantedBy=multi-user.target
