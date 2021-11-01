@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-set -e
+set -ex
 
 if systemctl is-active --quiet lightup-ssh-connect ; then
     echo "lightup-ssh-connect service is already running. To reconfigure this service please run 'systemctl stop lightup-ssh-connect.service' first"
@@ -13,8 +13,9 @@ else
     BRANCH=${LIGHTUP_BRANCH:-main}
     curl -H 'Cache-Control: no-cache' -L https://raw.githubusercontent.com/lupfoss/lupmgr/$BRANCH/init.sh > init.sh
     source init.sh
-    rm init.sh
-    cd lupmgr
+    pwd
+#    rm init.sh
+#    cd lupmgr
 fi
 
 source user_config.sh
