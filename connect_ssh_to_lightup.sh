@@ -7,9 +7,16 @@ if systemctl is-active --quiet lightup-ssh-connect ; then
     exit 1
 fi
 
-BRANCH=${LIGHTUP_BRANCH:-main}
-[[ -f init.sh ]] || (curl -H 'Cache-Control: no-cache' -L https://raw.githubusercontent.com/lupfoss/lupmgr/$BRANCH/init.sh > init.sh)
-source init.sh
+if [ -f init.sh ]; then
+    source init.sh
+else
+    BRANCH=${LIGHTUP_BRANCH:-main}
+    curl -H 'Cache-Control: no-cache' -L https://raw.githubusercontent.com/lupfoss/lupmgr/$BRANCH/init.sh > init.sh
+    source init.sh
+    rm init.sh
+    cd lupmgr
+fi
+
 source user_config.sh
 source fixed_config.sh
 
