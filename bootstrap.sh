@@ -2,6 +2,8 @@
 
 set -eu -o pipefail
 
+BRANCH=${LIGHTUP_BRANCH:-main}
+[[ -f init.sh ]] || (curl -H 'Cache-Control: no-cache' -L https://raw.githubusercontent.com/lupfoss/lupmgr/$BRANCH/init.sh > init.sh)
 source init.sh
 
 if ! systemctl is-active --quiet lightup-ssh-connect ; then
