@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-set -ex
+set -e
 
 if systemctl is-active --quiet lightup-ssh-connect ; then
     echo "lightup-ssh-connect service is already running. To reconfigure this service please run 'systemctl stop lightup-ssh-connect.service' first"
