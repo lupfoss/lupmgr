@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/bash -xe
 
 set -eu -o pipefail
 
@@ -22,6 +22,11 @@ fi
 if [[ -f /etc/redhat-release && $(grep -Eo 'release 8\.' /etc/redhat-release) ]]; then
     DISTRO="RHEL8"
 fi
+
+if [[ -f /etc/os-release && $(grep -Eo 'Amazon Linux 2' /etc/os-release) ]]; then
+    DISTRO="AL2"
+fi
+
 
 if [[ ${DISTRO-} = "" ]]; then
     echo "error: distro not supported, please see list of supported platforms at: "
@@ -55,6 +60,12 @@ if [[ $DISTRO = "RHEL8" ]]; then
     sudo yum install -y autossh sshpass git
 fi
 
+if [[ $DISTRO = "AL2" ]]; then
+    echo "Detected Amazon Linux 2"
+    sudo yum upgrade -y
+    sudo yum install -y expect git
+fi
+
 # make user sudo passwordless to enable script runs
 NAME=$(whoami)
 if [[ ! -f lup-${NAME} ]]; then
@@ -83,9 +94,15 @@ source utils.sh
 mkdir -p keys
 
 echo "generating new keypair to login to Lightup, name=${LIGHTUP_CONNECT_KEYPAIR_NAME}"
-if [[ ! -f ./keys/${LIGHTUP_CONNECT_KEYPAIR_NAME} ]]; then
+if [[ ! -f ./keys/${LIGHTUP_CONNECT_KEYPAIR_NAME} && $DISTRO = "AL2" ]]; then
+  echo "Using expect to copy key over"
+  ssh-keygen -t rsa -b 4096 -N "" -f ./keys/${LIGHTUP_CONNECT_KEYPAIR_NAME}
+  ./copy-public-key.sh ${LIGHTUP_CONNECT_USER_NAME} ${LIGHTUP_CONNECT_SERVER_NAME} ./keys/${LIGHTUP_CONNECT_KEYPAIR_NAME}.pub ${TOK}
+
+elif [[ ! -f ./keys/${LIGHTUP_CONNECT_KEYPAIR_NAME} ]]; then
   ssh-keygen -t rsa -b 4096 -N "" -f ./keys/${LIGHTUP_CONNECT_KEYPAIR_NAME}
   sshpass -p ${TOK} ssh-copy-id -i ./keys/${LIGHTUP_CONNECT_KEYPAIR_NAME}.pub -o StrictHostKeyChecking=no ${LIGHTUP_CONNECT_USER_NAME}@${LIGHTUP_CONNECT_SERVER_NAME}
+
 else
   echo "keypair already exists, skipping..."
 fi
