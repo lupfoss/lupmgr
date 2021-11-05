@@ -71,7 +71,7 @@ fi
 cd lupmgr && git pull && git checkout ${BRANCH}
 
 echo "export LIGHTUP_TLA=${LIGHTUP_TLA}" > user_config.sh
-echo "export HA_INSTALL=${HA_INSTALL}" > user_config.sh
+echo "export HA_INSTALL=${HA_INSTALL}" >> user_config.sh
 echo "export INSTALL_DATAPLANE=${INSTALL_DATAPLANE}" >> user_config.sh
 echo "export LIGHTUP_CONNECT_ADMIN_PORT=${LIGHTUP_CONNECT_ADMIN_PORT}" >> user_config.sh
 echo "export LIGHTUP_CONNECT_APP_PORT=${LIGHTUP_CONNECT_APP_PORT}" >> user_config.sh
