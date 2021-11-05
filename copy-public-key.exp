@@ -21,14 +21,5 @@ send_log  "Connecting to $HOST\n"
 # now connecting to lightup TLA endpoint
 spawn ssh-copy-id -i $KEY_PATH -o StrictHostKeyChecking=no  $USERNAME@$HOST
 
-#match_max 100000
-
-# Look for passwod prompt
-expect "*assword: *"
-
-# Send password aka $password 
-send "$TOKEN\r"
-
-# send blank line (\r) to make sure we get back to gui
-send "\r"
-expect eof
+# Look for passwod prompt and send the password
+expect "*assword: " { send $TOKEN }
