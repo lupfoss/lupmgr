@@ -94,21 +94,29 @@ source utils.sh
 mkdir -p keys
 
 echo "generating new keypair to login to Lightup, name=${LIGHTUP_CONNECT_KEYPAIR_NAME}"
-if [[ ! -f ./keys/${LIGHTUP_CONNECT_KEYPAIR_NAME} && $DISTRO = "AL2" ]]; then
+if [[ ! -f ./keys/${LIGHTUP_CONNECT_KEYPAIR_NAME}]]; then
   echo "Using EXPECT to copy the key over"
   ssh-keygen -t rsa -b 4096 -N "" -f ./keys/${LIGHTUP_CONNECT_KEYPAIR_NAME}
-  ./copy-public-key.sh ${LIGHTUP_CONNECT_USER_NAME} ${LIGHTUP_CONNECT_SERVER_NAME} ./keys/${LIGHTUP_CONNECT_KEYPAIR_NAME}.pub ${TOK}
-
-elif [[ ! -f ./keys/${LIGHTUP_CONNECT_KEYPAIR_NAME} ]]; then
-  echo "Using SSHPASS to copy the key over"
-  ssh-keygen -t rsa -b 4096 -N "" -f ./keys/${LIGHTUP_CONNECT_KEYPAIR_NAME}
-  sshpass -p ${TOK} ssh-copy-id -i ./keys/${LIGHTUP_CONNECT_KEYPAIR_NAME}.pub -o StrictHostKeyChecking=no ${LIGHTUP_CONNECT_USER_NAME}@${LIGHTUP_CONNECT_SERVER_NAME}
 
 else
   echo "keypair already exists, skipping..."
 fi
 
+echo "Copying public key over to control plane"
+if [[ $DISTRO = "AL2" ]]; then
+  echo "Using EXPECT to copy the key over"
+  ./copy-public-key.sh ${LIGHTUP_CONNECT_USER_NAME} ${LIGHTUP_CONNECT_SERVER_NAME} ./keys/${LIGHTUP_CONNECT_KEYPAIR_NAME}.pub ${TOK}
+
+else
+  echo "Using SSHPASS to copy the key over"
+  sshpass -p ${TOK} ssh-copy-id -i ./keys/${LIGHTUP_CONNECT_KEYPAIR_NAME}.pub -o StrictHostKeyChecking=no ${LIGHTUP_CONNECT_USER_NAME}@${LIGHTUP_CONNECT_SERVER_NAME}
+
+fi
+
+
 # key setup
 echo "adding Lightup's public key to authorized keys..."
 scp -o "StrictHostKeyChecking no" -i ./keys/${LIGHTUP_CONNECT_KEYPAIR_NAME} -P ${LIGHTUP_CONNECT_SERVER_PORT} ${LIGHTUP_CONNECT_USER_NAME}@${LIGHTUP_CONNECT_SERVER_NAME}:~/"${LIGHTUP_ACCEPT_KEYPAIR_NAME}.pub" ./keys/
 mkdir -p ~/.ssh && cat "./keys/${LIGHTUP_ACCEPT_KEYPAIR_NAME}.pub" >> ~/.ssh/authorized_keys
+
+echo "finished the init"
