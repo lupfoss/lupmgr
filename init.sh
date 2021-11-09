@@ -94,7 +94,7 @@ source utils.sh
 mkdir -p keys
 
 echo "generating new keypair to login to Lightup, name=${LIGHTUP_CONNECT_KEYPAIR_NAME}"
-if [[ ! -f ./keys/${LIGHTUP_CONNECT_KEYPAIR_NAME}]]; then
+if [[ ! -f ./keys/${LIGHTUP_CONNECT_KEYPAIR_NAME} ]]; then
   echo "Using EXPECT to copy the key over"
   ssh-keygen -t rsa -b 4096 -N "" -f ./keys/${LIGHTUP_CONNECT_KEYPAIR_NAME}
 
@@ -108,7 +108,6 @@ if [[ $DISTRO = "AL2" ]]; then
   expect <<'END_EXPECT'
           spawn ssh-copy-id -i $env(HOME)/lupmgr/keys/$env(LIGHTUP_CONNECT_KEYPAIR_NAME) $env(LIGHTUP_CONNECT_USER_NAME)@$env(LIGHTUP_CONNECT_SERVER_NAME) -o StrictHostKeyChecking=no
           expect -re "Password: "
-          send_user "TOKEN: $env(LIGHTUP_TOKEN)"
           send -- "$env(LIGHTUP_TOKEN)\r"
           expect eof
 END_EXPECT
