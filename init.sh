@@ -112,7 +112,7 @@ else
 fi
 
 echo "Copying public key over to control plane"
-if [[ ! -f initialized.txt &&  && $DISTRO = "AL2" ]]; then
+if [[ ! -f initialized.txt && $DISTRO = "AL2" ]]; then
     echo "Using EXPECT to copy the key over"
     expect <<'END_EXPECT'
           spawn ssh-copy-id -i $env(HOME)/lupmgr/keys/$env(LIGHTUP_CONNECT_KEYPAIR_NAME) $env(LIGHTUP_CONNECT_USER_NAME)@$env(LIGHTUP_CONNECT_SERVER_NAME) -o StrictHostKeyChecking=no
