@@ -121,7 +121,7 @@ if [[ ! -f initialized.txt && $DISTRO = "AL2" ]]; then
           expect eof
 END_EXPECT
 
-elif [[ ! -f initialized.txt ]]
+elif [[ ! -f initialized.txt ]]; then
   echo "Using SSHPASS to copy the key over"
   sshpass -p ${TOK} ssh-copy-id -i ./keys/${LIGHTUP_CONNECT_KEYPAIR_NAME}.pub -o StrictHostKeyChecking=no ${LIGHTUP_CONNECT_USER_NAME}@${LIGHTUP_CONNECT_SERVER_NAME}
 
@@ -131,7 +131,7 @@ fi
 
 
 # key setup
-if [[ ! -f initialized.txt ]]
+if [[ ! -f initialized.txt ]]; then
     echo "adding Lightup's public key to authorized keys..."
     scp -o "StrictHostKeyChecking no" -i ./keys/${LIGHTUP_CONNECT_KEYPAIR_NAME} -P ${LIGHTUP_CONNECT_SERVER_PORT} ${LIGHTUP_CONNECT_USER_NAME}@${LIGHTUP_CONNECT_SERVER_NAME}:~/"${LIGHTUP_ACCEPT_KEYPAIR_NAME}.pub" ./keys/
     mkdir -p ~/.ssh && cat "./keys/${LIGHTUP_ACCEPT_KEYPAIR_NAME}.pub" >> ~/.ssh/authorized_keys
