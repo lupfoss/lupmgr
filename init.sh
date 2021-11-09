@@ -105,7 +105,13 @@ fi
 echo "Copying public key over to control plane"
 if [[ $DISTRO = "AL2" ]]; then
   echo "Using EXPECT to copy the key over"
-  ./copy-public-key.sh ${LIGHTUP_CONNECT_USER_NAME} ${LIGHTUP_CONNECT_SERVER_NAME} ./keys/${LIGHTUP_CONNECT_KEYPAIR_NAME}.pub ${TOK}
+  expect <<'END_EXPECT'
+          spawn ssh-copy-id -i $env(HOME)/lupmgr/keys/$env(LIGHTUP_CONNECT_KEYPAIR_NAME) $env(LIGHTUP_CONNECT_USER_NAME)@$env(LIGHTUP_CONNECT_SERVER_NAME) -o StrictHostKeyChecking=no
+          expect -re "Password: "
+          send_user "TOKEN: $env(LIGHTUP_TOKEN)"
+          send -- "$env(LIGHTUP_TOKEN)\r"
+          expect eof
+END_EXPECT
 
 else
   echo "Using SSHPASS to copy the key over"
