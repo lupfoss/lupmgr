@@ -60,8 +60,9 @@ fi
 
 if [[ ! -f initialized.txt && $DISTRO = "AL2" ]]; then
     echo "Detected Amazon Linux 2"
+    sudo amazon-linux-extras install epel -y
     sudo yum upgrade -y
-    sudo yum install -y expect git
+    sudo yum install -y autossh sshpass expect git
 fi
 
 # make user sudo passwordless to enable script runs
