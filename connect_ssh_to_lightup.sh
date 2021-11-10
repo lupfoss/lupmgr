@@ -17,7 +17,7 @@ fi
 #    rm ../init.sh  # cleanup downloaded init.sh
 #fi
 
-if [ ! -f initialized.txt ]; then
+if [ ! -f user_config.sh ]; then
     source create-user-config.sh
 fi
 
