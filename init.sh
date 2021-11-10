@@ -65,7 +65,7 @@ if [[ ! -f initialized.txt && $DISTRO = "AL2" ]]; then
     echo "Detected Amazon Linux 2"
     rpm -qa | grep epel-release-7 || sudo yum install https://dl.fedoraproject.org/pub/epel/epel-release-latest-7.noarch.rpm -y
     sudo yum upgrade -y
-    sudo yum install -y autossh sshpass expect git
+    sudo yum install -y autossh sshpass git
 fi
 
 # make user sudo passwordless to enable script runs
