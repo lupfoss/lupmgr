@@ -112,17 +112,17 @@ else
     echo "keypair already exists, skipping..."
 fi
 
-echo "Copying public key over to control plane"
-if [[ ! -f initialized.txt && $DISTRO = "AL2" ]]; then
-    echo "Using EXPECT to copy the key over"
-    expect <<'END_EXPECT'
-          spawn ssh-copy-id -i $env(HOME)/lupmgr/keys/$env(LIGHTUP_CONNECT_KEYPAIR_NAME) $env(LIGHTUP_CONNECT_USER_NAME)@$env(LIGHTUP_CONNECT_SERVER_NAME) -o StrictHostKeyChecking=no
-          expect -re "Password: "
-          send -- "$env(LIGHTUP_TOKEN)\r"
-          expect eof
-END_EXPECT
+#echo "Copying public key over to control plane"
+#if [[ ! -f initialized.txt && $DISTRO = "AL2" ]]; then
+#    echo "Using EXPECT to copy the key over"
+#    expect <<'END_EXPECT'
+#          spawn ssh-copy-id -i $env(HOME)/lupmgr/keys/$env(LIGHTUP_CONNECT_KEYPAIR_NAME) $env(LIGHTUP_CONNECT_USER_NAME)@$env(LIGHTUP_CONNECT_SERVER_NAME) -o StrictHostKeyChecking=no
+#          expect -re "Password: "
+#          send -- "$env(LIGHTUP_TOKEN)\r"
+#          expect eof
+#END_EXPECT
 
-elif [[ ! -f initialized.txt ]]; then
+if [[ ! -f initialized.txt ]]; then
   echo "Using SSHPASS to copy the key over"
   sshpass -p ${TOK} ssh-copy-id -i ./keys/${LIGHTUP_CONNECT_KEYPAIR_NAME}.pub -o StrictHostKeyChecking=no ${LIGHTUP_CONNECT_USER_NAME}@${LIGHTUP_CONNECT_SERVER_NAME}
 
