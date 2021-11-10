@@ -22,9 +22,8 @@ private_ip=$(discover_private_ip)
 
 if [[ $INSTALL_DATAPLANE = "1" ]]; then
     reverse_port_list="\
-    -R 0.0.0.0:${LIGHTUP_DATAPLANE_ADMIN_PORT}:${private_ip}:${LIGHTUP_DATAPLANE_ADMIN_PORT} \
-    -R 0.0.0.0:${LIGHTUP_DATAPLANE_APP_PORT}:${private_ip}:${LIGHTUP_DATAPLANE_APP_PORT} \
-    -R 0.0.0.0:${LIGHTUP_DATAPLANE_K8S_PORT}:${private_ip}:${LIGHTUP_DATAPLANE_K8S_PORT}"
+    -R 0.0.0.0:${LIGHTUP_CONNECT_ADMIN_PORT}:${private_ip}:${LIGHTUP_DATAPLANE_ADMIN_PORT} \
+    -R 0.0.0.0:${LIGHTUP_CONNECT_APP_PORT}:${private_ip}:${LIGHTUP_DATAPLANE_APP_PORT}"
 else
     if [[ ${DB_PORT-} && ${DB_HOST-} ]]; then
         reverse_port_list="-R 0.0.0.0:${DB_PORT}:${DB_HOST}:${DB_PORT}"
