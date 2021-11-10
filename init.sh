@@ -62,9 +62,9 @@ if [[ $DISTRO = "RHEL8" ]]; then
 fi
 
 if [[ $DISTRO = "AL2" ]]; then
+    # TODO: This could be combined with RHEL7
     # https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/add-repositories.html
-    sudo yum install https://dl.fedoraproject.org/pub/epel/epel-release-latest-7.noarch.rpm -y
-
+    rpm -qa | grep epel-release-7 || sudo yum install https://dl.fedoraproject.org/pub/epel/epel-release-latest-7.noarch.rpm -y
     sudo yum upgrade -y
     sudo yum install -y autossh sshpass git
 fi
