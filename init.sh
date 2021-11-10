@@ -81,14 +81,6 @@ if [[ ! -f initialized.txt ]]; then
     git pull && git checkout ${BRANCH}
 fi
 
-#echo "export LIGHTUP_TLA=${LIGHTUP_TLA}" > user_config.sh
-#echo "export INSTALL_DATAPLANE=${INSTALL_DATAPLANE}" >> user_config.sh
-#echo "export LIGHTUP_CONNECT_KEYPAIR_NAME=${LIGHTUP_CONNECT_KEYPAIR_NAME}" >> user_config.sh
-#echo "export LIGHTUP_CONNECT_MAPPED_PORT=${LIGHTUP_CONNECT_MAPPED_PORT}" >> user_config.sh
-#echo "export LIGHTUP_DATAPLANE_USERNAME=$(whoami)" >> user_config.sh
-#echo "export LIGHTUP_DATAPLANE_LUPMGR_DIR=$(pwd)" >> user_config.sh
-#echo "export LIGHTUP_DATAPLANE_HOMEDIR=${HOME}" >> user_config.sh
-
 if [[ ! -f ./initialized.txt && ! -f ./user_config.sh ]]; then
     echo "Generating the user_config.sh"
     source create-user-config.sh
@@ -111,16 +103,6 @@ if [[ ! -f initialized.txt && ! -f ./keys/${LIGHTUP_CONNECT_KEYPAIR_NAME} ]]; th
 else
     echo "keypair already exists, skipping..."
 fi
-
-#echo "Copying public key over to control plane"
-#if [[ ! -f initialized.txt && $DISTRO = "AL2" ]]; then
-#    echo "Using EXPECT to copy the key over"
-#    expect <<'END_EXPECT'
-#          spawn ssh-copy-id -i $env(HOME)/lupmgr/keys/$env(LIGHTUP_CONNECT_KEYPAIR_NAME) $env(LIGHTUP_CONNECT_USER_NAME)@$env(LIGHTUP_CONNECT_SERVER_NAME) -o StrictHostKeyChecking=no
-#          expect -re "Password: "
-#          send -- "$env(LIGHTUP_TOKEN)\r"
-#          expect eof
-#END_EXPECT
 
 if [[ ! -f initialized.txt ]]; then
   echo "Using SSHPASS to copy the key over"
