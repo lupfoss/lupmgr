@@ -7,14 +7,8 @@ if systemctl is-active --quiet lightup-dataplane-connect ; then
     exit 1
 fi
 
-if [ -f init.sh ]; then
-    source init.sh
-else
-    # outside of repo - download init.sh
-    BRANCH=${LIGHTUP_BRANCH:-main}
-    curl -H 'Cache-Control: no-cache' -L https://raw.githubusercontent.com/lupfoss/lupmgr/$BRANCH/init.sh > init.sh
-    source init.sh
-    rm ../init.sh  # cleanup downloaded init.sh
+if [ ! -f user_config.sh ]; then
+    source create-user-config.sh
 fi
 
 source user_config.sh
