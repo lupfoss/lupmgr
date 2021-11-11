@@ -81,7 +81,7 @@ fi
 [[ -d lupmgr ]] || git clone https://github.com/lupfoss/lupmgr.git
 cd lupmgr && git pull && git checkout ${BRANCH}
 
-if [[ ! -f ./initialized.txt && ! -f ./user_config.sh ]]; then
+if [[ ! -f ./user_config.sh ]]; then
     source create-user-config.sh
 else
     echo "user_config.sh already exists"
