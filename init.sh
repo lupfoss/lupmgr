@@ -26,6 +26,10 @@ if [[ -f /etc/redhat-release && $(grep -Eo 'release 8\.' /etc/redhat-release) ]]
     DISTRO="RHEL8"
 fi
 
+if [[ -f /etc/os-release && $(grep -Eo 'Amazon Linux 2' /etc/os-release) ]]; then
+    DISTRO="AL2"
+fi
+
 if [[ ${DISTRO-} = "" ]]; then
     echo "error: distro not supported, please see list of supported platforms at: "
     echo "https://docs.lightup.ai/lightup-quickstart/deployment/lightup-hybrid-quick-start#create-a-vm"
@@ -42,7 +46,6 @@ if [[ $DISTRO = "Ubuntu" ]]; then
     #state, so this script fails if run again after replicated unless
     #the following is executed.
     sudo apt --fix-broken install
-
     sudo apt install -y autossh sshpass git
 fi
 
@@ -54,6 +57,14 @@ fi
 
 if [[ $DISTRO = "RHEL8" ]]; then
     rpm -qa | grep epel-release-8 || sudo yum install https://dl.fedoraproject.org/pub/epel/epel-release-latest-8.noarch.rpm -y
+    sudo yum upgrade -y
+    sudo yum install -y autossh sshpass git
+fi
+
+if [[ $DISTRO = "AL2" ]]; then
+    # TODO: This could be combined with RHEL7
+    # https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/add-repositories.html
+    rpm -qa | grep epel-release-7 || sudo yum install https://dl.fedoraproject.org/pub/epel/epel-release-latest-7.noarch.rpm -y
     sudo yum upgrade -y
     sudo yum install -y autossh sshpass git
 fi
