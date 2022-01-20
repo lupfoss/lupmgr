@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# to run in debug mode and clone the repo instead of download a release, call with DEBUG=true.
+# to run in debug mode and clone the repo instead of download a release, call with LIGHTUP_DEBUG=true.
 
 set -eu -o pipefail
 

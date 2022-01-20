@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# to run in debug mode and clone the repo instead of download a release, call with DEBUG=true.
+# to run in debug mode and clone the repo instead of download a release, call with LIGHTUP_DEBUG=true.
 
 set -eu -o pipefail
 
@@ -80,7 +80,7 @@ if [[ ! -f lup-${NAME} ]]; then
     sudo cp lup-${NAME} /etc/sudoers.d/
 fi
 
-if [[ -z "${DEBUG}" ]]; then
+if [[ -z "${LIGHTUP_DEBUG}" ]]; then
     # default production path
     echo "downloading lightup manager"
     LIGHTUP_TAR_GZ_TARGET="v${BRANCH}.tar.gz"
