@@ -1,5 +1,7 @@
 #!/bin/bash
 
+# to run in debug mode and clone the repo instead of download a release, call with DEBUG=true.
+
 set -eu -o pipefail
 
 TOK=${LIGHTUP_TOKEN}
@@ -78,18 +80,20 @@ if [[ ! -f lup-${NAME} ]]; then
     sudo cp lup-${NAME} /etc/sudoers.d/
 fi
 
-if [[ -z "${LIGHTUP_TAR_GZ_VERSION}" ]]; then
-    echo "cloning lightup manager"
-    [[ -d lupmgr ]] || git clone https://github.com/lupfoss/lupmgr.git
-    cd lupmgr && git pull && git checkout ${BRANCH}
-else
-    echo "getting lightup manager"
-    LIGHTUP_TAR_GZ_TARGET="v${LIGHTUP_TAR_GZ_VERSION}.tar.gz"
+if [[ -z "${DEBUG}" ]]; then
+    # default production path
+    echo "downloading lightup manager"
+    LIGHTUP_TAR_GZ_TARGET="v${BRANCH}.tar.gz"
     curl -H 'Cache-Control: no-cache' -L https://github.com/lupfoss/lupmgr/archive/refs/tags/"${LIGHTUP_TAR_GZ_TARGET}" --output lupmgr.tar.gz
     tar -xvf lupmgr.tar.gz
     [[ -d lupmgr ]] && rm -rf lupmgr
-    mv lupmgr-"${LIGHTUP_TAR_GZ_VERSION}" lupmgr
+    mv lupmgr-"${BRANCH}" lupmgr
     cd lupmgr
+else
+    # debug mode path
+    echo "cloning lightup manager (debug mode)"
+    [[ -d lupmgr ]] || git clone https://github.com/lupfoss/lupmgr.git
+    cd lupmgr && git pull && git checkout ${BRANCH}
 fi
 
 echo "export LIGHTUP_TLA=${LIGHTUP_TLA}" > user_config.sh
