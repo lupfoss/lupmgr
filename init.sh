@@ -85,8 +85,8 @@ if [[ -z "${LIGHTUP_TAR_GZ_VERSION}" ]]; then
 else
     echo "getting lightup manager"
     LIGHTUP_TAR_GZ_TARGET="v${LIGHTUP_TAR_GZ_VERSION}.tar.gz"
-    curl -H 'Cache-Control: no-cache' -L https://github.com/lupfoss/lupmgr/archive/refs/tags/"${LIGHTUP_TAR_GZ_TARGET}"
-    tar -xf "${LIGHTUP_TAR_GZ_TARGET}"
+    curl -H 'Cache-Control: no-cache' -L https://github.com/lupfoss/lupmgr/archive/refs/tags/"${LIGHTUP_TAR_GZ_TARGET}" --output lupmgr.tar.gz
+    tar -xvf lupmgr
     mv lupmgr-"${LIGHTUP_TAR_GZ_VERSION}" lupmgr
     cd lupmgr
 fi
