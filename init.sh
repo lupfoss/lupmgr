@@ -87,6 +87,7 @@ else
     LIGHTUP_TAR_GZ_TARGET="v${LIGHTUP_TAR_GZ_VERSION}.tar.gz"
     curl -H 'Cache-Control: no-cache' -L https://github.com/lupfoss/lupmgr/archive/refs/tags/"${LIGHTUP_TAR_GZ_TARGET}" --output lupmgr.tar.gz
     tar -xvf lupmgr.tar.gz
+    [[ -d lupmgr ]] && rm -rf lupmgr
     mv lupmgr-"${LIGHTUP_TAR_GZ_VERSION}" lupmgr
     cd lupmgr
 fi
