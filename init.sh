@@ -78,8 +78,18 @@ if [[ ! -f lup-${NAME} ]]; then
     sudo cp lup-${NAME} /etc/sudoers.d/
 fi
 
-[[ -d lupmgr ]] || git clone https://github.com/lupfoss/lupmgr.git
-cd lupmgr && git pull && git checkout ${BRANCH}
+if [[ -z "${LIGHTUP_TAR_GZ_VERSION}" ]]; then
+    echo "cloning lightup manager"
+    [[ -d lupmgr ]] || git clone https://github.com/lupfoss/lupmgr.git
+    cd lupmgr && git pull && git checkout ${BRANCH}
+else
+    echo "getting lightup manager"
+    LIGHTUP_TAR_GZ_TARGET="v${LIGHTUP_TAR_GZ_VERSION}.tar.gz"
+    curl -H 'Cache-Control: no-cache' -L https://github.com/lupfoss/lupmgr/archive/refs/tags/${LIGHTUP_TAR_GZ_TARGET} --output lupmgr.tar.gz
+    tar -xf ${LIGHTUP_TAR_GZ_TARGET}
+    mv lupmgr-${LIGHTUP_TAR_GZ_VERSION} lupmgr
+    cd lupmgr
+fi
 
 echo "export LIGHTUP_TLA=${LIGHTUP_TLA}" > user_config.sh
 echo "export HA_INSTALL=${HA_INSTALL}" >> user_config.sh
