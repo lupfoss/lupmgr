@@ -2,9 +2,8 @@
 
 set -eu -o pipefail
 
-# outside of repo - download init.sh
-BRANCH=${LIGHTUP_BRANCH:-main}
-curl -H 'Cache-Control: no-cache' -L https://raw.githubusercontent.com/lupfoss/lupmgr/$BRANCH/init.sh > init.sh
+REPO_LOCATION=${LIGHTUP_DOWNLOAD_LOCATION:-"https://s3.us-west-2.amazonaws.com/www.lightup.ai"}
+curl -H 'Cache-Control: no-cache' -L "${REPO_LOCATION}"/init.sh > init.sh
 source init.sh
 rm ../init.sh  # cleanup downloaded init.sh
 

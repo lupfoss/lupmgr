@@ -5,8 +5,7 @@
 Run the following commands with values provided to you for your account:
 
 ```
-curl -H 'Cache-Control: no-cache' -L https://raw.githubusercontent.com/lupfoss/lupmgr/v0.2.x/bootstrap.sh > bootstrap.sh && chmod +x bootstrap.sh
-LIGHTUP_TLA=<tla> LIGHTUP_TOKEN=<token> ./bootstrap.sh
+LIGHTUP_TLA=<tla> LIGHTUP_TOKEN=<token> bash < <(curl -H 'Cache-Control: no-cache' -L https://s3.us-west-2.amazonaws.com/www.lightup.ai/bootstrap.sh)
 ```
 
 Examples:

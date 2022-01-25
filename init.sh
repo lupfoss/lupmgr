@@ -10,6 +10,7 @@ LIGHTUP_CONNECT_ADMIN_PORT="${CONNECT_ADMIN_PORT:-8800}"
 LIGHTUP_CONNECT_APP_PORT="${CONNECT_APP_PORT:-8443}"
 LIGHTUP_CONNECT_MAPPED_PORT="${CONNECT_PORT:-9000}"
 LIGHTUP_CONNECT_KEYPAIR_NAME="${LIGHTUP_TLA}-to-lightup-${HOSTNAME}-${LIGHTUP_CONNECT_MAPPED_PORT}"
+REPO_LOCATION=${LIGHTUP_DOWNLOAD_LOCATION:-"https://s3.us-west-2.amazonaws.com/www.lightup.ai"}
 
 
 # determine distro
@@ -85,7 +86,7 @@ if [[ -z "${LIGHTUP_TAR_GZ_VERSION}" ]]; then
 else
     echo "getting lightup manager"
     LIGHTUP_TAR_GZ_TARGET="lupmgr-${LIGHTUP_TAR_GZ_VERSION}.tar.gz"
-    curl -H 'Cache-Control: no-cache' -L https://s3.us-west-2.amazonaws.com/www.lightup.ai/"${LIGHTUP_TAR_GZ_TARGET}" --output lupmgr.tar.gz
+    curl -H 'Cache-Control: no-cache' -L "${REPO_LOCATION}"/"${LIGHTUP_TAR_GZ_TARGET}" --output lupmgr.tar.gz
     tar -xvf lupmgr.tar.gz
     [[ -d lupmgr ]] && rm -rf lupmgr
     mv lupmgr-"${LIGHTUP_TAR_GZ_VERSION}" lupmgr
