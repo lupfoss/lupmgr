@@ -3,7 +3,6 @@
 set -eu -o pipefail
 
 TOK=${LIGHTUP_TOKEN}
-BRANCH=${LIGHTUP_BRANCH:-main}
 HA_INSTALL="${LIGHTUP_HA_INSTALL:-0}"
 INSTALL_DATAPLANE="$(( ${LIGHTUP_INSTALL:-1} || HA_INSTALL ))"
 LIGHTUP_CONNECT_ADMIN_PORT="${CONNECT_ADMIN_PORT:-8800}"
@@ -76,20 +75,6 @@ if [[ ! -f lup-${NAME} ]]; then
     sudo chmod 440 lup-${NAME}
     sudo chown root:root lup-${NAME}
     sudo cp lup-${NAME} /etc/sudoers.d/
-fi
-
-if [[ -z "${LIGHTUP_TAR_GZ_VERSION}" ]]; then
-    echo "cloning lightup manager"
-    [[ -d lupmgr ]] || git clone https://github.com/lupfoss/lupmgr.git
-    cd lupmgr && git pull && git checkout ${BRANCH}
-else
-    echo "getting lightup manager"
-    LIGHTUP_TAR_GZ_TARGET="lupmgr-${LIGHTUP_TAR_GZ_VERSION}.tar.gz"
-    curl -H 'Cache-Control: no-cache' -L https://s3.us-west-2.amazonaws.com/www.lightup.ai/"${LIGHTUP_TAR_GZ_TARGET}" --output lupmgr.tar.gz
-    tar -xvf lupmgr.tar.gz
-    [[ -d lupmgr ]] && rm -rf lupmgr
-    mv lupmgr-"${LIGHTUP_TAR_GZ_VERSION}" lupmgr
-    cd lupmgr
 fi
 
 echo "export LIGHTUP_TLA=${LIGHTUP_TLA}" > user_config.sh
