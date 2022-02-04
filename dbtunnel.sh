@@ -29,8 +29,6 @@ source user_config.sh
 # shellcheck source=fixed_config.sh
 source fixed_config.sh
 
-this_dir=$(pwd)
-
 command="autossh -f -M 0 ${LIGHTUP_CONNECT_USER_NAME}@${LIGHTUP_CONNECT_SERVER_NAME} \
 	-p ${LIGHTUP_CONNECT_SERVER_PORT} -N \
 	-o ExitOnForwardFailure=yes \
@@ -39,7 +37,7 @@ command="autossh -f -M 0 ${LIGHTUP_CONNECT_USER_NAME}@${LIGHTUP_CONNECT_SERVER_N
 	-o ServerAliveInterval=30 \
 	-o ServerAliveCountMax=3 \
 	-R 0.0.0.0:${DB_PORT}:${DB_HOST}:${DB_PORT} \
-	-vvv -i ${this_dir}/keys/${LIGHTUP_CONNECT_KEYPAIR_NAME} &"
+	-vvv -i /opt/lightup//keys/${LIGHTUP_CONNECT_KEYPAIR_NAME} &"
 
 DEBUG=0
 

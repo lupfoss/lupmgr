@@ -14,7 +14,6 @@ source utils.sh
 
 echo "Generating lightup-dataplane-connect service..."
 
-this_dir=$(pwd)
 private_ip=$(discover_private_ip)
 
 if [[ $INSTALL_DATAPLANE = "1" ]]; then
@@ -34,8 +33,8 @@ if [[ ${reverse_port_list-} ]]; then
     echo "#!/usr/bin/env bash" > generated/lightup-dataplane-connect-service.sh
     echo  \
     "AUTOSSH_DEBUG=1 \
-    AUTOSSH_LOGFILE=${this_dir}/lightup-dataplane-connect.service.log \
-    AUTOSSH_PIDFILE=${this_dir}/lightup-dataplane-connect.service.pid \
+    AUTOSSH_LOGFILE=/opt/lightup/lightup-dataplane-connect.service.log \
+    AUTOSSH_PIDFILE=/opt/lightup/lightup-dataplane-connect.service.pid \
     autossh -f -M 0 ${LIGHTUP_CONNECT_USER_NAME}@${LIGHTUP_CONNECT_SERVER_NAME} -p ${LIGHTUP_CONNECT_SERVER_PORT} -N \
         -o ExitOnForwardFailure=yes \
         -o UserKnownHostsFile=/dev/null \
@@ -43,7 +42,7 @@ if [[ ${reverse_port_list-} ]]; then
         -o ServerAliveInterval=30 \
         -o ServerAliveCountMax=3 \
         ${reverse_port_list} \
-        -vvv -i $this_dir/keys/${LIGHTUP_CONNECT_KEYPAIR_NAME}" >> generated/lightup-dataplane-connect-service.sh
+        -vvv -i /opt/lightup/keys/${LIGHTUP_CONNECT_KEYPAIR_NAME}" >> generated/lightup-dataplane-connect-service.sh
 
     sudo mkdir -p /opt/lightup
     sudo cp generated/lightup-dataplane-connect-service.sh /opt/lightup/lightup-dataplane-connect-service.sh
