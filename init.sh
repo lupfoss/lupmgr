@@ -109,6 +109,8 @@ if [[ ! -f /opt/lightup/keys/${LIGHTUP_CONNECT_KEYPAIR_NAME} ]]; then
   sshpass -p ${TOK} ssh-copy-id -i ./keys/${LIGHTUP_CONNECT_KEYPAIR_NAME}.pub -o StrictHostKeyChecking=no ${LIGHTUP_CONNECT_USER_NAME}@${LIGHTUP_CONNECT_SERVER_NAME}
   sudo mkdir -p /opt/lightup
   sudo cp -r ./keys/ /opt/lightup/
+  # copy the public key back to the connect VM for backup / disaster recovery
+  sudo scp -o "StrictHostKeyChecking no" -i /opt/lightup/keys/${LIGHTUP_CONNECT_KEYPAIR_NAME} -P ${LIGHTUP_CONNECT_SERVER_PORT} /opt/lightup/keys/${LIGHTUP_CONNECT_KEYPAIR_NAME}.pub ${LIGHTUP_CONNECT_USER_NAME}@${LIGHTUP_CONNECT_SERVER_NAME}:~/"${LIGHTUP_CONNECT_KEYPAIR_NAME}.pub"
 else
   echo "keypair already exists, skipping..."
 fi
