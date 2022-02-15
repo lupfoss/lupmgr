@@ -10,6 +10,14 @@ LIGHTUP_CONNECT_APP_PORT="${CONNECT_APP_PORT:-8443}"
 LIGHTUP_CONNECT_MAPPED_PORT="${CONNECT_PORT:-9000}"
 LIGHTUP_CONNECT_KEYPAIR_NAME="${LIGHTUP_TLA}-to-lightup-${HOSTNAME}-${LIGHTUP_CONNECT_MAPPED_PORT}"
 
+# check user
+
+if [ `whoami` = root ]; then
+    echo "ERROR: Please do not run this script as root or using sudo"
+    exit 1
+else
+    echo "User '`whoami`' will be used for the installation"
+fi
 
 # determine distro
 

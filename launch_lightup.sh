@@ -29,6 +29,8 @@ case $1 in
     ;;
     connect_dataplane_to_lightup) source connect_dataplane_to_lightup.sh
     ;;
+    preflight_check) source preflight-check.sh
+    ;;
     "") echo "Lightup Manager downloaded to: $(pwd)"
     ;;
     *)
