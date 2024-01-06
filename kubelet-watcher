@@ -1,0 +1,17 @@
+#!/bin/bash
+
+function log() {
+  echo "`date` $1"
+}
+
+#M=1073741824 #1G
+#M=2147483648 #2G
+M=4294967296 #4G
+m=$(systemctl show kubelet -pMemoryCurrent | sed 's/MemoryCurrent=//')
+if (( $m < $M )); then 
+	log "memory used=$m, memory limit=$M, kubelet within limit" 
+else
+	log "memory used=$m, memory limit=$M, restarting kubelet"
+	sudo systemctl restart kubelet
+fi
+
